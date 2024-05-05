@@ -11,18 +11,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 part 'login_state.dart';
 
-
-
 class LoginCubit extends Cubit<LoginState> {
   final ISimpleUserData userData =
-  UserDataFactory.createUserData(LocalDataType.secured);
+      UserDataFactory.createUserData(LocalDataType.secured);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final LocalAuthentication _localAuth = LocalAuthentication();
-  final emailController = TextEditingController(text: "mohamed.essam9393@gmail.com");
-  final passwordController = TextEditingController(text: "123456789");
+  final emailController =
+      TextEditingController(text: "mohamed.essam9393@gmail.com");
+  final passwordController = TextEditingController(text: "12345678");
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
 
   LoginCubit() : super(LoginInitial());
 
@@ -38,17 +36,21 @@ class LoginCubit extends Cubit<LoginState> {
           );
 
           if (!authenticated) {
-            emit(LoginError(errorMessage: const ErrorMessageModel(msg: 'Fingerprint authentication failed')));
+            emit(LoginError(
+                errorMessage: const ErrorMessageModel(
+                    msg: 'Fingerprint authentication failed')));
             return;
           }
         } else {
-          emit(LoginError(errorMessage:const ErrorMessageModel(msg: 'Biometric authentication is not available')));
+          emit(LoginError(
+              errorMessage: const ErrorMessageModel(
+                  msg: 'Biometric authentication is not available')));
           return;
         }
 
         // Proceed with Firebase authentication
         final UserCredential userCredential =
-        await _auth.signInWithEmailAndPassword(
+            await _auth.signInWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
@@ -57,13 +59,19 @@ class LoginCubit extends Cubit<LoginState> {
         final user = userCredential.user;
         if (user != null) {
           // Save user data
-
-          // userData.writeJsonMap(
-          //     "userData",
-          //     user.toJson(),);
+          UserModel userModel = UserModel(
+            token: userCredential.user!.uid,
+            email: userCredential.user!.email!,
+            name: userCredential.user!.displayName!,
+          );
+          userData.writeJsonMap(
+            "userData",
+            userModel.toJson(),
+          );
           emit(LoginLoaded(userData: user));
         } else {
-          emit(LoginError(errorMessage:const ErrorMessageModel(msg: 'User is null')));
+          emit(LoginError(
+              errorMessage: const ErrorMessageModel(msg: 'User is null')));
         }
       } catch (e) {
         // Login failed, handle the error
@@ -71,17 +79,20 @@ class LoginCubit extends Cubit<LoginState> {
       }
     }
   }
+
   Future<UserCredential?> signInWithGoogle() async {
     try {
       _googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        emit(LoginError(errorMessage:const ErrorMessageModel(msg:  'Google Sign-In canceled')));
+        emit(LoginError(
+            errorMessage:
+                const ErrorMessageModel(msg: 'Google Sign-In canceled')));
         return null;
       }
 
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -98,3 +109,23 @@ class LoginCubit extends Cubit<LoginState> {
   }
 }
 
+class UserModel {
+  final String email;
+  final String name;
+  final String token;
+  UserModel({required this.email, required this.name, required this.token});
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      email: json['email'] as String,
+      name: json['name'] as String,
+      token: json['token'] as String,
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'name': name,
+      'token': token,
+    };
+  }
+}

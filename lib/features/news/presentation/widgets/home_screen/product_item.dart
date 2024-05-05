@@ -19,7 +19,6 @@ class ProductItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildImageSection(),
             _buildDetailsSection(),
           ],
         ),
@@ -38,18 +37,6 @@ class ProductItem extends StatelessWidget {
     );
   }
 
-  Widget _buildImageSection() {
-    return SizedBox(
-      width: 100,
-      height: 100,
-      child: Hero(
-        tag: newsDetails.title,
-        child:Container(
-
-        )
-      ),
-    );
-  }
 
   Widget _buildDetailsSection() {
     return Expanded(

@@ -13,22 +13,15 @@ class NewsListWidget extends StatelessWidget {
   NewsListWidget({super.key});
 
   void _onRefresh(BuildContext context) async {
-    context.read<NewsCubit>().getCategories(NewsRequest(page: 1));
+    context.read<NewsCubit>().getCategories(NewsRequest(page: 1,category: categoriesList
+        .firstWhere((element) =>
+    element.id ==
+        context.read<SelectedCategoryCubit>().state.categoryId)
+        .name));
     await Future.delayed(const Duration(milliseconds: 1000));
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading(BuildContext context) async {
-    context.read<NewsCubit>().getCategories(NewsRequest(
-        page: ++context.read<NewsCubit>().page,
-        category: categoriesList
-            .firstWhere((element) =>
-        element.id ==
-            context.read<SelectedCategoryCubit>().state.categoryId)
-            .name));
-    await Future.delayed(const Duration(milliseconds: 1000));
-    _refreshController.loadComplete();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +38,6 @@ class NewsListWidget extends StatelessWidget {
               enablePullDown: true,
               enablePullUp: true,
               controller: _refreshController,
-              onLoading: () => _onLoading(context),
               onRefresh: () => _onRefresh(context),
               child: ListView.builder(
                 itemCount: news.length,

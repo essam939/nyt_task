@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<NewsCubit>().getCategories(NewsRequest(page: 1));
+    context.read<NewsCubit>().getCategories(NewsRequest(page: 1,category: categoriesList.first.name));
     context.read<SelectedCategoryCubit>().setCategory(categoriesList.first.id);
   }
 
