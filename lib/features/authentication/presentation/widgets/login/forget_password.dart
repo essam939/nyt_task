@@ -1,4 +1,4 @@
-part of '../../pages/login_screen.dart';
+part of '../../pages/auth_screen.dart';
 class _ForgetPassword extends StatelessWidget {
   const _ForgetPassword();
 

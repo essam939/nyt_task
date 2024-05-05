@@ -4,8 +4,8 @@ import 'package:nyt/core/service/simple_secure_user_data.dart';
 import 'package:nyt/core/service/simple_user_data.dart';
 import 'package:nyt/features/authentication/data/data_sources/authentication_remote_data_source.dart';
 import 'package:nyt/features/authentication/data/repositories/authantication_reposiory.dart';
-import 'package:nyt/features/authentication/domain/use_cases/login_usecase.dart';
-import 'package:nyt/features/authentication/presentation/controller/login_cubit.dart';
+import 'package:nyt/features/authentication/domain/use_cases/register_usecase.dart';
+import 'package:nyt/features/authentication/presentation/controller/auth_cubit.dart';
 import 'package:nyt/features/news/data/data_sources/news_remote_data_source.dart';
 import 'package:nyt/features/news/data/repositories/news_repository.dart';
 import 'package:nyt/features/news/domain/repositories/base_news_repository.dart';
@@ -24,12 +24,12 @@ mixin ServiceLocator {
     // bloc
     instance.registerLazySingleton(() => NewsCubit(getNewsUseCase: instance()));
     instance.registerLazySingleton(() => SelectedCategoryCubit());
-    instance.registerLazySingleton(() => LoginCubit());
+    instance.registerLazySingleton(() => AuthCubit());
 
 
     // use cases
     instance.registerLazySingleton(() => GetNewsUseCase(instance()));
-    instance.registerLazySingleton(() => LoginUseCase(instance()));
+    instance.registerLazySingleton(() => RegisterUseCase(instance()));
 
 // repository
     instance.registerLazySingleton<BaseNewsRepository>(

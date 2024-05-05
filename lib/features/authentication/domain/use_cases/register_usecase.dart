@@ -1,21 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:nyt/core/error/failure.dart';
 import 'package:nyt/core/utilities/base_usecase.dart';
-import 'package:nyt/features/authentication/domain/entities/login_request.dart';
-import 'package:nyt/features/authentication/domain/entities/login_response.dart';
+import 'package:nyt/features/authentication/domain/entities/register_request.dart';
+import 'package:nyt/features/authentication/domain/entities/register_response.dart';
 import 'package:nyt/features/authentication/domain/repositories/base_authentication_repository.dart';
 
 
 
 
 
-class LoginUseCase extends BaseUseCase<LoginResponse, LoginRequest> {
+class RegisterUseCase extends BaseUseCase<RegisterResponse, RegisterRequest> {
   final BaseAuthenticationRepository authenticationRepository;
 
-  LoginUseCase(this.authenticationRepository);
+  RegisterUseCase(this.authenticationRepository);
 
   @override
-  Future<Either<Failure, LoginResponse>> execute(LoginRequest params) async {
+  Future<Either<Failure, RegisterResponse>> execute(RegisterRequest params) async {
     return await authenticationRepository.login(params);
   }
 }

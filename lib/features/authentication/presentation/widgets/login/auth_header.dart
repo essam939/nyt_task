@@ -1,8 +1,8 @@
-part of '../../pages/login_screen.dart';
+part of '../../pages/auth_screen.dart';
 
 
-class _LoginHeader extends StatelessWidget {
-  const _LoginHeader();
+class _AuthHeader extends StatelessWidget {
+  const _AuthHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class _LoginHeader extends StatelessWidget {
         45.verticalSpace,
         Center(
           child: Text(
-            "Login Screen",
+            "Auth Screen",
             style: TextStyle(
               fontSize: 25.sp,
               color: Colors.black,

@@ -1,11 +1,11 @@
-part of '../../pages/login_screen.dart';
+part of '../../pages/auth_screen.dart';
 
-class _LoginForm extends StatelessWidget {
-  const _LoginForm();
+class _AuthForm extends StatelessWidget {
+  const _AuthForm();
 
   @override
   Widget build(BuildContext context) {
-    final authController = ServiceLocator.instance<LoginCubit>();
+    final authController = ServiceLocator.instance<AuthCubit>();
     return WidgetLifecycleListener(
         child: Padding(
       padding: const EdgeInsets.all(8.0),
@@ -74,10 +74,10 @@ class _LoginForm extends StatelessWidget {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        await authController.login();
+                        await authController.register();
                       },
                       child: Text(
-                        'login',
+                        'Register',
                         style: TextStyle(fontSize: 20.sp),
                       )),
                 ),

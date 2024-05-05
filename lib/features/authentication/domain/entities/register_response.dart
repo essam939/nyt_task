@@ -1,19 +1,19 @@
-class LoginResponse {
+class RegisterResponse {
  final Client client;
   final String accessToken;
   final String tokenType;
   final int expiresIn;
 
 
-  const LoginResponse({
+  const RegisterResponse({
     required this.client,
     required this.accessToken,
     required this.tokenType,
     required this.expiresIn,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
+  factory RegisterResponse.fromJson(Map<String, dynamic> json) {
+    return RegisterResponse(
       client: Client.fromJson(json['client'] as Map<String, dynamic>),
       accessToken: json['access_token'] as String,
       tokenType: json['token_type'] as String,

@@ -1,9 +1,9 @@
 
-part of '../../pages/login_screen.dart';
+part of '../../pages/auth_screen.dart';
 
-class _LoginBackground extends StatelessWidget {
+class _AuthBackground extends StatelessWidget {
   final Widget body;
-  const _LoginBackground({required this.body});
+  const _AuthBackground({required this.body});
 
   @override
   Widget build(BuildContext context) {

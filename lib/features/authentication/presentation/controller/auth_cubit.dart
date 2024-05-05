@@ -9,9 +9,9 @@ import 'package:nyt/core/service/remote/error_message_remote.dart';
 import 'package:nyt/core/utilities/enums.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-part 'login_state.dart';
+part 'auth_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
+class AuthCubit extends Cubit<AuthState> {
   final ISimpleUserData userData =
       UserDataFactory.createUserData(LocalDataType.secured);
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,11 +22,11 @@ class LoginCubit extends Cubit<LoginState> {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  LoginCubit() : super(LoginInitial());
+  AuthCubit() : super(AuthInitial());
 
-  Future<void> login() async {
+  Future<void> register() async {
     if (loginFormKey.currentState!.validate()) {
-      emit(LoginLoading());
+      emit(AuthLoading());
       try {
         // Check if fingerprint authentication is available
         bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
@@ -36,13 +36,13 @@ class LoginCubit extends Cubit<LoginState> {
           );
 
           if (!authenticated) {
-            emit(LoginError(
+            emit(AuthError(
                 errorMessage: const ErrorMessageModel(
                     msg: 'Fingerprint authentication failed')));
             return;
           }
         } else {
-          emit(LoginError(
+          emit(AuthError(
               errorMessage: const ErrorMessageModel(
                   msg: 'Biometric authentication is not available')));
           return;
@@ -69,14 +69,14 @@ class LoginCubit extends Cubit<LoginState> {
             "userData",
             userModel.toJson(),
           );
-          emit(LoginLoaded(userData: user));
+          emit(AuthLoaded(userData: user));
         } else {
-          emit(LoginError(
+          emit(AuthError(
               errorMessage: const ErrorMessageModel(msg: 'User is null')));
         }
       } catch (e) {
-        // Login failed, handle the error
-        emit(LoginError(errorMessage: ErrorMessageModel(msg: e.toString())));
+        // Auth failed, handle the error
+        emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
       }
     }
   }
@@ -91,7 +91,7 @@ class LoginCubit extends Cubit<LoginState> {
 
       // If user cancels sign-in, show error message and return
       if (googleUser == null) {
-        emit(LoginError(
+        emit(AuthError(
             errorMessage: const ErrorMessageModel(msg: 'Google Sign-In canceled')));
         return;
       }
@@ -125,9 +125,9 @@ class LoginCubit extends Cubit<LoginState> {
             "userData",
             userModel.toJson(),
           );
-          emit(LoginLoaded(userData: user));
+          emit(AuthLoaded(userData: user));
         } else {
-          emit(LoginError(
+          emit(AuthError(
               errorMessage: const ErrorMessageModel(msg: 'User is null')));
         }
       } else {
@@ -143,15 +143,15 @@ class LoginCubit extends Cubit<LoginState> {
             "userData",
             userModel.toJson(),
           );
-          emit(LoginLoaded(userData: user));
+          emit(AuthLoaded(userData: user));
         } else {
-          emit(LoginError(
+          emit(AuthError(
               errorMessage: const ErrorMessageModel(msg: 'User is null')));
         }
       }
     } catch (e) {
       // Handle the error
-      emit(LoginError(errorMessage: ErrorMessageModel(msg: e.toString())));
+      emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
     }
   }
 }

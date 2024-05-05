@@ -5,7 +5,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nyt/core/service/remote/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nyt/core/utilities/db_helper.dart';
-import 'features/authentication/presentation/controller/login_cubit.dart';
+import 'features/authentication/presentation/controller/auth_cubit.dart';
 import 'features/news/presentation/controller/categories/categories_cubit.dart';
 import 'features/news/presentation/controller/news/news_cubit.dart';
 import 'features/splash_screen.dart';
@@ -34,8 +34,8 @@ class MyApp extends StatelessWidget {
             BlocProvider<SelectedCategoryCubit>(
               create: (_) => ServiceLocator.instance<SelectedCategoryCubit>(),
             ),
-            BlocProvider<LoginCubit>(
-              create: (_) => ServiceLocator.instance<LoginCubit>(),
+            BlocProvider<AuthCubit>(
+              create: (_) => ServiceLocator.instance<AuthCubit>(),
             ),
           ],
           child: MaterialApp(

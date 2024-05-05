@@ -1,6 +1,6 @@
-part of '../../pages/login_screen.dart';
-class _CreateNewAccount extends StatelessWidget {
-  const _CreateNewAccount();
+part of '../../pages/auth_screen.dart';
+class _LoginAccount extends StatelessWidget {
+  const _LoginAccount();
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +11,11 @@ class _CreateNewAccount extends StatelessWidget {
           onTap: (){},
           child: RichText(
               text: const TextSpan(
-                  text: 'Don\'t have an account?',
+                  text: 'Already have an account? ',
                   style: TextStyle(color: Colors.grey),
                   children: [
                     TextSpan(
-                        text: 'Sign up',
+                        text: 'log in',
                         style: TextStyle(color: Colors.black))
                   ])),
         ),

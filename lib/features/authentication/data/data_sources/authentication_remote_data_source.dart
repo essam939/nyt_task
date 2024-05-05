@@ -1,20 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:nyt/core/error/failure.dart';
 import 'package:nyt/core/service/remote/dio_consumer.dart';
-import 'package:nyt/features/authentication/domain/entities/login_request.dart';
-import 'package:nyt/features/authentication/domain/entities/login_response.dart';
+import 'package:nyt/features/authentication/domain/entities/register_request.dart';
+import 'package:nyt/features/authentication/domain/entities/register_response.dart';
 
 
 part 'endpoints.dart';
 abstract class BaseAuthenticationDataSource {
-  Future<Either<Failure, LoginResponse>> login(LoginRequest request);
+  Future<Either<Failure, RegisterResponse>> register(RegisterRequest request);
 }
 class AuthenticationDataSource extends BaseAuthenticationDataSource {
   final DioConsumer _dio;
   AuthenticationDataSource(this._dio);
   @override
-  Future<Either<Failure, LoginResponse>> login(
-      LoginRequest request,
+  Future<Either<Failure, RegisterResponse>> register(
+      RegisterRequest request,
       ) async {
     final responseEither = await _dio.post(
       _AuthEndPoints.login,
@@ -23,7 +23,7 @@ class AuthenticationDataSource extends BaseAuthenticationDataSource {
     return responseEither.fold(
           (failure) => Left(failure),
           (response) => Right(
-        LoginResponse.fromJson(
+            RegisterResponse.fromJson(
           response!['data'] as Map<String, dynamic>,
         ),
       ),

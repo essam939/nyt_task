@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nyt/core/service/local/interface/i_simple_user_data.dart';
 import 'package:nyt/core/service/local/user_data_factory.dart';
 import 'package:nyt/core/utilities/enums.dart';
-import 'package:nyt/features/authentication/presentation/pages/login_screen.dart';
+import 'package:nyt/features/authentication/presentation/pages/auth_screen.dart';
 import 'package:nyt/features/news/presentation/pages/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {

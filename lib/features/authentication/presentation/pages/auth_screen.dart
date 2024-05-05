@@ -4,29 +4,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nyt/core/service/remote/service_locator.dart';
 import 'package:nyt/core/widget_life_cycle_listener.dart';
-import 'package:nyt/features/authentication/presentation/controller/login_cubit.dart';
+import 'package:nyt/features/authentication/presentation/controller/auth_cubit.dart';
 import 'package:nyt/features/news/presentation/pages/home_screen.dart';
 
 
-part '../widgets/login/login_header.dart';
-part '../widgets/login/login_form.dart';
-part '../widgets/login/login_background.dart';
+part '../widgets/login/auth_header.dart';
+part '../widgets/login/auth_form.dart';
+part '../widgets/login/auth_background.dart';
 part '../widgets/login/forget_password.dart';
-part '../widgets/login/create_new_account.dart';
+part '../widgets/login/login_account.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is LoginLoading) {
+        if (state is AuthLoading) {
           context.loaderOverlay.show();
-        } else if (state is LoginLoaded) {
+        } else if (state is AuthLoaded) {
           context.loaderOverlay.hide();
           Navigator.push(context, MaterialPageRoute(builder: (_)=> const HomeScreen()));
-        } else if (state is LoginError) {
+        } else if (state is AuthError) {
           context.loaderOverlay.hide();
           var snackBar = SnackBar(
             content: Text(state.errorMessage.msg),
@@ -39,16 +39,16 @@ class LoginScreen extends StatelessWidget {
             backgroundColor: Colors.green,
           ),
           backgroundColor: Colors.green,
-          body: const _LoginBackground(
+          body: const _AuthBackground(
             body: SingleChildScrollView(
                 child: SafeArea(
               child: Center(
                 child: Column(
                   children: [
-                    _LoginHeader(),
-                    _LoginForm(),
+                    _AuthHeader(),
+                    _AuthForm(),
                     _ForgetPassword(),
-                    _CreateNewAccount(),
+                    _LoginAccount(),
                   ],
                 ),
               ),
