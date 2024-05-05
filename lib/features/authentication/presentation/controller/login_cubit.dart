@@ -58,7 +58,6 @@ class LoginCubit extends Cubit<LoginState> {
         // Successfully logged in, update UI or save user data
         final user = userCredential.user;
         if (user != null) {
-          print("klsdfghifgjsdhjkdf");
           // Save user data
           UserModel userModel = UserModel(
             token: userCredential.user!.uid,
@@ -70,7 +69,6 @@ class LoginCubit extends Cubit<LoginState> {
             "userData",
             userModel.toJson(),
           );
-          print("klsdfghifgjsdhjkdf");
           emit(LoginLoaded(userData: user));
         } else {
           emit(LoginError(
@@ -83,20 +81,26 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<UserCredential?> signInWithGoogle() async {
+  Future<void> registerWithGoogle() async {
     try {
+      // Sign out any existing Google user
       _googleSignIn.signOut();
+
+      // Start Google Sign-In process
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      // If user cancels sign-in, show error message and return
       if (googleUser == null) {
         emit(LoginError(
-            errorMessage:
-                const ErrorMessageModel(msg: 'Google Sign-In canceled')));
-        return null;
+            errorMessage: const ErrorMessageModel(msg: 'Google Sign-In canceled')));
+        return;
       }
 
+      // Obtain authentication tokens
       final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      await googleUser.authentication;
 
+      // Create Firebase credential using Google authentication tokens
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -104,22 +108,50 @@ class LoginCubit extends Cubit<LoginState> {
 
       // Sign in with Google credential using Firebase
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
-      final user = userCredential.user;
-      UserModel userModel = UserModel(
-        token: userCredential.user!.uid,
-        email: userCredential.user!.email!,
-        name: userCredential.user!.displayName!,
-      );
-      userData.writeJsonMap(
-        "userData",
-        userModel.toJson(),
-      );
-      emit(LoginLoaded(userData: user!));
 
+      // Check if the user is signing in for the first time
+      final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
+
+      if (isNewUser) {
+        // If user is new, save user data and perform registration
+        final user = userCredential.user;
+        if (user != null) {
+          UserModel userModel = UserModel(
+            token: userCredential.user!.uid,
+            email: userCredential.user!.email!,
+            name: userCredential.user!.displayName!,
+          );
+          userData.writeJsonMap(
+            "userData",
+            userModel.toJson(),
+          );
+          emit(LoginLoaded(userData: user));
+        } else {
+          emit(LoginError(
+              errorMessage: const ErrorMessageModel(msg: 'User is null')));
+        }
+      } else {
+        // If user already exists, proceed with sign-in
+        final user = userCredential.user;
+        if (user != null) {
+          UserModel userModel = UserModel(
+            token: userCredential.user!.uid,
+            email: userCredential.user!.email!,
+            name: userCredential.user!.displayName!,
+          );
+          userData.writeJsonMap(
+            "userData",
+            userModel.toJson(),
+          );
+          emit(LoginLoaded(userData: user));
+        } else {
+          emit(LoginError(
+              errorMessage: const ErrorMessageModel(msg: 'User is null')));
+        }
+      }
     } catch (e) {
       // Handle the error
       emit(LoginError(errorMessage: ErrorMessageModel(msg: e.toString())));
-      return null;
     }
   }
 }

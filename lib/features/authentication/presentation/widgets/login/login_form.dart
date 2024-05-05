@@ -83,7 +83,7 @@ class _LoginForm extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: ()async{
-                    await authController.signInWithGoogle();
+                    await authController.registerWithGoogle();
                   },
                   child: SizedBox(
                     width: 50.w,
