@@ -4,7 +4,10 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  firebase_auth
+  firebase_core
   flutter_secure_storage_windows
+  local_auth_windows
   url_launcher_windows
 )
 

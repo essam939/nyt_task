@@ -16,7 +16,6 @@ class DBHelper {
   final String abstract = "abstract";
   final String byline = "byline";
   final String publishedDate = "published_date";
-  final String image = "image";
 
   Database? db;
 
@@ -26,7 +25,7 @@ class DBHelper {
 
     db = await openDatabase(path, version: 1, onCreate: (db, version) {
       db.execute(
-          "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $section TEXT, $title TEXT, $url TEXT, $abstract TEXT, $byline TEXT, $publishedDate TEXT, $image TEXT)");
+          "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $section TEXT, $title TEXT, $url TEXT, $abstract TEXT, $byline TEXT, $publishedDate TEXT)");
     });
 
     return db;
@@ -46,7 +45,6 @@ class DBHelper {
           abstract: newsResponse.abstract,
           byline: newsResponse.byline,
           publishedDate: newsResponse.publishedDate,
-          image: newsResponse.image,
         },
       );
     });

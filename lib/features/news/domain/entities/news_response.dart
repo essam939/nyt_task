@@ -9,8 +9,6 @@ class NewsResponse {
   final String abstract;
   final String byline;
   final String publishedDate;
-  final String image;
-  final String? localImagePath;
   NewsResponse({
     required this.section,
     required this.title,
@@ -18,8 +16,6 @@ class NewsResponse {
     required this.abstract,
     required this.byline,
     required this.publishedDate,
-    required this.image,
-    this.localImagePath,
   });
   factory NewsResponse.fromJson(Map<String, dynamic> json) {
     return NewsResponse(
@@ -29,8 +25,6 @@ class NewsResponse {
       abstract: json['abstract'] ??"N/A",
       byline: json['byline'] ??"N/A",
       publishedDate:json['published_date']??"N/A",
-      image:json['multimedia'][0]['url'],
-        localImagePath: null
     );
   }
 }

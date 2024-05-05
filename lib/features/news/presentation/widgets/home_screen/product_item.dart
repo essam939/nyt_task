@@ -45,12 +45,9 @@ class ProductItem extends StatelessWidget {
       height: 100,
       child: Hero(
         tag: newsDetails.title,
-        child
-            :newsDetails.localImagePath != null ?
-        MyLocalImageWidget(imagePath: newsDetails.localImagePath!)
-            : Image.network(
-          newsDetails.image,
-        ),
+        child:Container(
+
+        )
       ),
     );
   }

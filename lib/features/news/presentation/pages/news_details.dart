@@ -26,7 +26,7 @@ class NewsDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              NewsImage(newsResponse: newsResponse),
+            Container(),
               20.verticalSpace,
               CustomText(
                 text: "Title: ${newsResponse.title}",

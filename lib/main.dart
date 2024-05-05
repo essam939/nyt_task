@@ -3,12 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nyt/core/service/remote/service_locator.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:nyt/core/utilities/db_helper.dart';
+import 'package:nyt/features/authentication/presentation/pages/login_screen.dart';
+import 'features/authentication/presentation/controller/login_cubit.dart';
 import 'features/news/presentation/controller/categories/categories_cubit.dart';
 import 'features/news/presentation/controller/news/news_cubit.dart';
-import 'features/news/presentation/pages/home_screen.dart';
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await DBHelper.dbHelper.initDB();
   ServiceLocator.init();
   runApp(const MyApp());
 }
@@ -29,6 +34,9 @@ class MyApp extends StatelessWidget {
             BlocProvider<SelectedCategoryCubit>(
               create: (_) => ServiceLocator.instance<SelectedCategoryCubit>(),
             ),
+            BlocProvider<LoginCubit>(
+              create: (_) => ServiceLocator.instance<LoginCubit>(),
+            ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -41,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      child:   const LoaderOverlay(child: HomeScreen()),
+      child:   const LoaderOverlay(child: LoginScreen()),
     );
   }
 }

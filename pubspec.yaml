@@ -50,6 +50,9 @@ dependencies:
   intl: ^0.19.0
   sqflite: ^2.3.3+1
   connectivity_plus: ^6.0.3
+  local_auth: ^2.2.0
+  firebase_core: ^2.28.0
+  firebase_auth: ^4.19.0
 
 dev_dependencies:
   flutter_test:
