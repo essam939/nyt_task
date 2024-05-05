@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nyt/features/news/domain/entities/news_response.dart';
 import 'package:nyt/features/news/presentation/pages/news_details.dart';
-import 'package:nyt/features/news/presentation/widgets/local_image_widget.dart';
 
 
 class ProductItem extends StatelessWidget {

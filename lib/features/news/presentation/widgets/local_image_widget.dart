@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class MyLocalImageWidget extends StatelessWidget {
   final String imagePath;
 
-  const MyLocalImageWidget({Key? key, required this.imagePath}) : super(key: key);
+  const MyLocalImageWidget({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {

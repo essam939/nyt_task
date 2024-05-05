@@ -7,11 +7,6 @@ import 'package:nyt/core/service/local/interface/i_simple_user_data.dart';
 import 'package:nyt/core/service/local/user_data_factory.dart';
 import 'package:nyt/core/service/remote/error_message_remote.dart';
 import 'package:nyt/core/utilities/enums.dart';
-import 'package:nyt/features/authentication/domain/entities/login_request.dart';
-import 'package:nyt/features/authentication/domain/entities/login_response.dart';
-import 'package:nyt/features/authentication/domain/use_cases/login_usecase.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 part 'login_state.dart';
@@ -43,11 +38,11 @@ class LoginCubit extends Cubit<LoginState> {
           );
 
           if (!authenticated) {
-            emit(LoginError(errorMessage: ErrorMessageModel(msg: 'Fingerprint authentication failed')));
+            emit(LoginError(errorMessage: const ErrorMessageModel(msg: 'Fingerprint authentication failed')));
             return;
           }
         } else {
-          emit(LoginError(errorMessage:ErrorMessageModel(msg: 'Biometric authentication is not available')));
+          emit(LoginError(errorMessage:const ErrorMessageModel(msg: 'Biometric authentication is not available')));
           return;
         }
 
@@ -68,7 +63,7 @@ class LoginCubit extends Cubit<LoginState> {
           //     user.toJson(),);
           emit(LoginLoaded(userData: user));
         } else {
-          emit(LoginError(errorMessage:ErrorMessageModel(msg: 'User is null')));
+          emit(LoginError(errorMessage:const ErrorMessageModel(msg: 'User is null')));
         }
       } catch (e) {
         // Login failed, handle the error
@@ -81,7 +76,7 @@ class LoginCubit extends Cubit<LoginState> {
       _googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        emit(LoginError(errorMessage:ErrorMessageModel(msg:  'Google Sign-In canceled')));
+        emit(LoginError(errorMessage:const ErrorMessageModel(msg:  'Google Sign-In canceled')));
         return null;
       }
 

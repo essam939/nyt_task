@@ -1,6 +1,5 @@
 
 
-import 'package:intl/intl.dart';
 
 class NewsResponse {
   final String section;

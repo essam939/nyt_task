@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nyt/features/news/domain/entities/news_response.dart';
 import 'package:nyt/features/news/presentation/widgets/news_details/cusom_button.dart';
 import 'package:nyt/features/news/presentation/widgets/news_details/custom_text.dart';
-import 'package:nyt/features/news/presentation/widgets/news_details/news_image.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,8 +25,6 @@ class NewsDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Container(),
-              20.verticalSpace,
               CustomText(
                 text: "Title: ${newsResponse.title}",
                 fontSize: 20.sp,
@@ -47,7 +44,7 @@ class NewsDetailsScreen extends StatelessWidget {
               ),
               20.verticalSpace,
               CustomText(
-                text: "Description: ${newsResponse.abstract??""}",
+                text: "Description: ${newsResponse.abstract}",
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:nyt/features/news/domain/entities/news_response.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -69,6 +70,8 @@ class DBHelper {
     await db!.delete(tableName);
 
     // Optionally, you can print a message or perform any other action after clearing the records
-    print('All records cleared successfully');
+    if (kDebugMode) {
+      print('All records cleared successfully');
+    }
   }
 }
