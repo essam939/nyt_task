@@ -16,8 +16,8 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               style: const TextStyle(color: Colors.black),
               textInputAction: TextInputAction.next,
-              controller: authController.phoneController,
-              keyboardType: TextInputType.phone,
+              controller: authController.emailController,
+              keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter phone number';
@@ -60,33 +60,40 @@ class _LoginForm extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.grey),
                 ),
               ),
-              Positioned(
-                  right: 0,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.remove_red_eye),
-                    color: Colors.grey,
-                    iconSize: 20.sp,
-                    padding: const EdgeInsets.all(0),
-                  )),
             ]),
             10.verticalSpace,
-            SizedBox(
-              width: 150.w,
-              height: 50.h,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                  ),
-                  onPressed: () async {
-                    await authController.login();
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: 150.w,
+                  height: 50.h,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () async {
+                        await authController.login();
+                      },
+                      child: Text(
+                        'login',
+                        style: TextStyle(fontSize: 20.sp),
+                      )),
+                ),
+                GestureDetector(
+                  onTap: ()async{
+                    await authController.signInWithGoogle();
                   },
-                  child: Text(
-                    'login',
-                    style: TextStyle(fontSize: 20.sp),
-                  )),
-            )
+                  child: SizedBox(
+                    width: 50.w,
+                    height: 50.h,
+                    child: Image.network("https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"),
+                  ),
+                )
+              ]
+            ),
+
           ],
         ),
       ),
