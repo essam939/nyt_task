@@ -18,7 +18,7 @@ class LoginCubit extends Cubit<LoginState> {
   final LocalAuthentication _localAuth = LocalAuthentication();
   final emailController =
       TextEditingController(text: "mohamed.essam9393@gmail.com");
-  final passwordController = TextEditingController(text: "12345678");
+  final passwordController = TextEditingController(text: "Moh@med.com5");
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -50,7 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
 
         // Proceed with Firebase authentication
         final UserCredential userCredential =
-            await _auth.signInWithEmailAndPassword(
+            await _auth.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
@@ -58,16 +58,19 @@ class LoginCubit extends Cubit<LoginState> {
         // Successfully logged in, update UI or save user data
         final user = userCredential.user;
         if (user != null) {
+          print("klsdfghifgjsdhjkdf");
           // Save user data
           UserModel userModel = UserModel(
             token: userCredential.user!.uid,
-            email: userCredential.user!.email!,
-            name: userCredential.user!.displayName!,
+            email: userCredential.user!.email??"",
+            name: userCredential.user!.displayName??"",
           );
+
           userData.writeJsonMap(
             "userData",
             userModel.toJson(),
           );
+          print("klsdfghifgjsdhjkdf");
           emit(LoginLoaded(userData: user));
         } else {
           emit(LoginError(
@@ -100,7 +103,19 @@ class LoginCubit extends Cubit<LoginState> {
       );
 
       // Sign in with Google credential using Firebase
-      return await _auth.signInWithCredential(credential);
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final user = userCredential.user;
+      UserModel userModel = UserModel(
+        token: userCredential.user!.uid,
+        email: userCredential.user!.email!,
+        name: userCredential.user!.displayName!,
+      );
+      userData.writeJsonMap(
+        "userData",
+        userModel.toJson(),
+      );
+      emit(LoginLoaded(userData: user!));
+
     } catch (e) {
       // Handle the error
       emit(LoginError(errorMessage: ErrorMessageModel(msg: e.toString())));
