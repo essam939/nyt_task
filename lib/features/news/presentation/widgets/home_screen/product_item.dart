@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nyt/features/news/domain/entities/news_response.dart';
 import 'package:nyt/features/news/presentation/pages/news_details.dart';
+import 'package:nyt/features/news/presentation/widgets/local_image_widget.dart';
 
 
 class ProductItem extends StatelessWidget {
@@ -44,7 +45,10 @@ class ProductItem extends StatelessWidget {
       height: 100,
       child: Hero(
         tag: newsDetails.title,
-        child: Image.network(
+        child
+            :newsDetails.localImagePath != null ?
+        MyLocalImageWidget(imagePath: newsDetails.localImagePath!)
+            : Image.network(
           newsDetails.image,
         ),
       ),

@@ -61,11 +61,11 @@ class NewsListWidget extends StatelessWidget {
           );
         } else if (state is NewsError) {
           return Center(
-            child: Text(state.errorMessage.msg),
+            child: Center(child: Text(state.errorMessage.msg,style: const TextStyle(color: Colors.red),)),
           );
         } else {
           return const Center(
-            child: Text('Something went wrong'),
+            child: Text('Something went wrong',style: TextStyle(color: Colors.red)),
           );
         }
       },

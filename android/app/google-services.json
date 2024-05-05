@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762187132034",
+    "project_id": "nyt-task",
+    "storage_bucket": "nyt-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762187132034:android:de91e28f8b1e4d2882589b",
+        "android_client_info": {
+          "package_name": "com.news.nyt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfplLO7zX-cGTRutiXRIuXi5g97l2w9bc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
