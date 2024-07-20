@@ -4,7 +4,16 @@
 1. Advanced Networking and Data Handling
 2. Secure Authentication and User Management
 3. Robust Database Integration and Offline Support
+## Instructions
 
+1. **Fork and Clone the Repository:**
+   - Fork the repository to your GitHub account.
+   - Clone the forked repository to your local machine.
+
+2. **Create a New Branch:**
+   ```bash
+   git checkout -b feature/implementation
+   
 ## Project Structure
 📦lib  
 ┣ 📂core  
