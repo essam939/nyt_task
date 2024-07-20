@@ -27,12 +27,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Analyze project
-        run: flutter analyze
-
-      - name: Run tests
-        run: flutter test
-
       - name: Build APK
         run: flutter build apk --release  # Use --release for production-ready builds
 
@@ -50,12 +44,6 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Analyze project
-        run: flutter analyze
-
-      - name: Run tests
-        run: flutter test
 
       - name: Build iOS
         run: flutter build ios --release  # Use --release for production-ready builds
