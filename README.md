@@ -131,18 +131,23 @@ Clean Architecture was chosen to ensure a clear separation of concerns, making t
 
 # Critical Thinking Questions
 1. How did you approach the design and implementation of the authentication feature considering mobile-specific challenges such as limited screen space and touch input?
+
    The authentication feature was designed with mobile-specific challenges in mind, focusing on a streamlined user interface that leverages biometric authentication (fingerprint, face ID) to minimize the need for complex input. The UI components are optimized for touch input with large, easily tappable buttons and concise forms to fit within the limited screen space.
 
 2. Can you explain the rationale behind your choice of mobile design pattern(s) for the application? How did they help in addressing the unique challenges of mobile development?
+
    The Bloc Pattern was chosen for state management due to its separation of business logic and UI, making the code more modular and testable. This pattern helps manage complex state changes efficiently and ensures a reactive UI, which is crucial for mobile applications that need to respond quickly to user interactions and state changes.
 
 3. What strategies did you employ to optimize database performance and storage efficiency for mobile environments? How did these strategies address the constraints of mobile devices?
+
    To optimize database performance and storage efficiency, I used efficient queries, indexing, and data caching strategies. Sqflite was chosen for local storage due to its lightweight nature and support for complex queries. Data was selectively synchronized with Firebase Firestore to balance performance and storage constraints, ensuring minimal local storage usage while maintaining data consistency.
 
 4. How did you ensure data consistency and integrity across online and offline modes in the database integration and offline support section? What trade-offs did you make to achieve this?
+
    Data consistency and integrity were ensured using background synchronization tasks managed by WorkManager. Conflict resolution strategies, such as last-write-wins and user intervention, were employed to handle discrepancies. The trade-off was the added complexity in managing offline states and ensuring seamless synchronization without compromising user experience.
 
 5. How did you incorporate error handling and user feedback mechanisms to enhance the user experience in the networking and data handling features? What were the key considerations?
+
    Error handling was implemented at multiple levels, including network request retries, graceful degradation, and user notifications for network failures. User feedback mechanisms included visual indicators like loaders and snack bars to inform users of ongoing processes and errors. Key considerations were to ensure that the app remains responsive and provides clear, actionable feedback to users in case of errors.
 
 #Conclusion
