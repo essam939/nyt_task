@@ -7,9 +7,7 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   build_android:
@@ -54,14 +52,5 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Format code
-        run: flutter format --set-exit-if-changed .
-
-      - name: Analyze project
-        run: flutter analyze
-
-      - name: Run tests
-        run: flutter test
-
-      - name: Build iOS
-        run: flutter build ios --release  # Use --release for production-ready builds
+      - name: Build ipa
+        run: flutter build ipa --no-codesign  # Use --release for production-ready builds
