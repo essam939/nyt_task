@@ -16,50 +16,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # Set up Flutter
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'  # or specify a specific version if needed
-
-      # Cache Flutter dependencies
-      - name: Cache Flutter pub dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-            !~/.pub-cache/bin
-            !~/.pub-cache/hosted
-            !~/.pub-cache/git
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-
+          flutter-version: '3.7.0'  # Update to your desired Flutter version
 
       - name: Install dependencies
         run: flutter pub get
 
-#      # Analyze project source
-#      - name: Analyze project source
-#        run: flutter analyze
-#
-#      # Run tests
-#      - name: Run tests
-#        run: flutter test
+      - name: Format code
+        run: flutter format --set-exit-if-changed .
 
-      # Build Android
-      - name: Build Android
-        run: flutter build apk --release
+      - name: Analyze project
+        run: flutter analyze
 
-  build-ios:
-    runs-on: macos-latest
+      - name: Run tests
+        run: flutter test
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 'latest'  # or specify a specific version if needed
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Build APK
+        run: flutter build apk --release  # Use --release for production-ready builds
+
       - name: Build iOS
-        run: flutter build ios --release
+        runs-on: macos-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Setup Flutter
+            uses: subosito/flutter-action@v2
+            with:
+              flutter-version: '3.22.0'
+
+          - name: Install dependencies
+            run: flutter pub get
+
+          - name: Format code
+            run: flutter format --set-exit-if-changed .
+
+          - name: Analyze project
+            run: flutter analyze
+
+          - name: Run tests
+            run: flutter test
+
+          - name: Build iOS
+            run: flutter build ios --release  # Use --release for production-ready builds
