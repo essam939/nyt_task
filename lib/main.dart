@@ -9,7 +9,7 @@ import 'features/authentication/presentation/controller/auth_cubit.dart';
 import 'features/news/presentation/controller/categories/categories_cubit.dart';
 import 'features/news/presentation/controller/news/news_cubit.dart';
 import 'features/splash_screen.dart';
-
+import 'package:dcdg/dcdg.dart';
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

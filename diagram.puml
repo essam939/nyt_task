@@ -1,0 +1,552 @@
+@startuml
+set namespaceSeparator ::
+
+class "nyt::core::error::exceptions.dart::ServerFailure" {
+}
+
+"nyt::core::error::failure.dart::Failure" <|-- "nyt::core::error::exceptions.dart::ServerFailure"
+
+abstract class "nyt::core::error::failure.dart::Failure" {
+  +ErrorMessageModel errorMessageModel
+  +List<Object> props
+}
+
+"nyt::core::error::failure.dart::Failure" o-- "nyt::core::service::remote::error_message_remote.dart::ErrorMessageModel"
+"equatable::src::equatable.dart::Equatable" <|-- "nyt::core::error::failure.dart::Failure"
+
+abstract class "nyt::core::service::local::interface::i_simple_user_data.dart::ISimpleUserData" {
+  +dynamic containKey()
+  +dynamic readString()
+  +dynamic readInt()
+  +dynamic readBool()
+  +dynamic readJsonMap()
+  +FutureOr<bool> writeString()
+  +FutureOr<bool> writeInt()
+  +FutureOr<bool> writeBool()
+  +FutureOr<bool> writeJsonMap()
+  +FutureOr<bool> delete()
+}
+
+abstract class "nyt::core::service::local::user_data_factory.dart::UserDataFactory" {
+  {static} +ISimpleUserData createUserData()
+}
+
+class "nyt::core::service::remote::api_consumer.dart::ApiConsumer" {
+  {static} -ApiConsumer _instance
+  +Dio dio
+  +dynamic get()
+  +dynamic post()
+  -ErrorMessageModel _handleError()
+}
+
+"nyt::core::service::remote::api_consumer.dart::ApiConsumer" o-- "nyt::core::service::remote::api_consumer.dart::ApiConsumer"
+"nyt::core::service::remote::api_consumer.dart::ApiConsumer" o-- "dio::src::dio.dart::Dio"
+"nyt::core::service::remote::dio_consumer.dart::DioConsumer" <|-- "nyt::core::service::remote::api_consumer.dart::ApiConsumer"
+
+abstract class "nyt::core::service::remote::dio_consumer.dart::DioConsumer" {
+  +dynamic get()
+  +dynamic post()
+}
+
+class "nyt::core::service::remote::error_message_remote.dart::ErrorMessageModel" {
+  +String msg
+  +List<Object?> props
+}
+
+"equatable::src::equatable.dart::Equatable" <|-- "nyt::core::service::remote::error_message_remote.dart::ErrorMessageModel"
+
+abstract class "nyt::core::service::remote::service_locator.dart::ServiceLocator" {
+  {static} +GetIt instance
+  {static} +void init()
+}
+
+"nyt::core::service::remote::service_locator.dart::ServiceLocator" o-- "get_it::get_it.dart::GetIt"
+
+class "nyt::core::service::simple_secure_user_data.dart::SimpleSecureData" {
+  -FlutterSecureStorage _pref
+  +FutureOr<bool> delete()
+  -dynamic _read()
+  +dynamic readString()
+  +dynamic readInt()
+  +dynamic readBool()
+  +dynamic readJsonMap()
+  -FutureOr<bool> _write()
+  +FutureOr<bool> writeBool()
+  +FutureOr<bool> writeInt()
+  +FutureOr<bool> writeString()
+  +FutureOr<bool> writeJsonMap()
+  +dynamic containKey()
+}
+
+"nyt::core::service::simple_secure_user_data.dart::SimpleSecureData" o-- "flutter_secure_storage::flutter_secure_storage.dart::FlutterSecureStorage"
+"nyt::core::service::local::interface::i_simple_user_data.dart::ISimpleUserData" <|-- "nyt::core::service::simple_secure_user_data.dart::SimpleSecureData"
+
+class "nyt::core::service::simple_user_data.dart::SimpleLocalData" {
+  -dynamic _pref
+  +FutureOr<bool> delete()
+  +dynamic readString()
+  +dynamic readInt()
+  +dynamic readBool()
+  +dynamic readJsonMap()
+  +FutureOr<bool> writeBool()
+  +FutureOr<bool> writeInt()
+  +FutureOr<bool> writeString()
+  +FutureOr<bool> writeJsonMap()
+  +dynamic containKey()
+}
+
+"nyt::core::service::local::interface::i_simple_user_data.dart::ISimpleUserData" <|-- "nyt::core::service::simple_user_data.dart::SimpleLocalData"
+
+abstract class "nyt::core::utilities::base_usecase.dart::BaseUseCase" {
+  +dynamic execute()
+}
+
+class "nyt::core::utilities::base_usecase.dart::NoParams" {
+  +List<Object> props
+}
+
+"equatable::src::equatable.dart::Equatable" <|-- "nyt::core::utilities::base_usecase.dart::NoParams"
+
+class "nyt::core::utilities::db_helper.dart::DBHelper" {
+  {static} +DBHelper dbHelper
+  +String dbName
+  +String tableName
+  +String colId
+  +String section
+  +String title
+  +String url
+  +String abstract
+  +String byline
+  +String publishedDate
+  +Database? db
+  +dynamic initDB()
+  +dynamic insertRecord()
+  +dynamic fetchAllRecords()
+  +dynamic clearRecords()
+}
+
+"nyt::core::utilities::db_helper.dart::DBHelper" o-- "nyt::core::utilities::db_helper.dart::DBHelper"
+"nyt::core::utilities::db_helper.dart::DBHelper" o-- "sqflite_common::sqlite_api.dart::Database"
+
+class "nyt::core::utilities::enums.dart::LocalDataType" {
+  +int index
+  {static} +List<LocalDataType> values
+  {static} +LocalDataType secured
+  {static} +LocalDataType local
+}
+
+"nyt::core::utilities::enums.dart::LocalDataType" o-- "nyt::core::utilities::enums.dart::LocalDataType"
+"dart::core::Enum" <|-- "nyt::core::utilities::enums.dart::LocalDataType"
+
+class "nyt::core::widget_life_cycle_listener.dart::WidgetLifecycleListener" {
+  +void Function()? onInit
+  +void Function()? onDispose
+  +Widget? child
+  +bool isSliver
+  +State<WidgetLifecycleListener> createState()
+}
+
+"nyt::core::widget_life_cycle_listener.dart::WidgetLifecycleListener" o-- "dart::ui::void Function()"
+"nyt::core::widget_life_cycle_listener.dart::WidgetLifecycleListener" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "nyt::core::widget_life_cycle_listener.dart::WidgetLifecycleListener"
+
+class "nyt::core::widget_life_cycle_listener.dart::_WidgetLifecycleListenerState" {
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "nyt::core::widget_life_cycle_listener.dart::_WidgetLifecycleListenerState"
+
+abstract class "nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::BaseAuthenticationDataSource" {
+  +dynamic register()
+}
+
+class "nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::AuthenticationDataSource" {
+  -DioConsumer _dio
+  +dynamic register()
+}
+
+"nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::AuthenticationDataSource" o-- "nyt::core::service::remote::dio_consumer.dart::DioConsumer"
+"nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::BaseAuthenticationDataSource" <|-- "nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::AuthenticationDataSource"
+
+abstract class "nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::_AuthEndPoints" {
+  {static} +String login
+}
+
+class "nyt::features::authentication::data::repositories::authantication_reposiory.dart::AuthenticationRepository" {
+  +BaseAuthenticationDataSource authenticationDataSource
+  +dynamic login()
+}
+
+"nyt::features::authentication::data::repositories::authantication_reposiory.dart::AuthenticationRepository" o-- "nyt::features::authentication::data::data_sources::authentication_remote_data_source.dart::BaseAuthenticationDataSource"
+"nyt::features::authentication::domain::repositories::base_authentication_repository.dart::BaseAuthenticationRepository" <|-- "nyt::features::authentication::data::repositories::authantication_reposiory.dart::AuthenticationRepository"
+
+class "nyt::features::authentication::domain::entities::register_request.dart::RegisterRequest" {
+  +String phone
+  +String password
+  +List<Object> props
+  +Map<String, dynamic> toJson()
+}
+
+"equatable::src::equatable.dart::Equatable" <|-- "nyt::features::authentication::domain::entities::register_request.dart::RegisterRequest"
+
+class "nyt::features::authentication::domain::entities::register_response.dart::RegisterResponse" {
+  +Client client
+  +String accessToken
+  +String tokenType
+  +int expiresIn
+  +Map<String, dynamic> toJson()
+}
+
+"nyt::features::authentication::domain::entities::register_response.dart::RegisterResponse" o-- "nyt::features::authentication::domain::entities::register_response.dart::Client"
+
+class "nyt::features::authentication::domain::entities::register_response.dart::Client" {
+  +int id
+  +String name
+  +String phone
+  +Map<String, dynamic> toJson()
+}
+
+abstract class "nyt::features::authentication::domain::repositories::base_authentication_repository.dart::BaseAuthenticationRepository" {
+  +dynamic login()
+}
+
+class "nyt::features::authentication::domain::use_cases::register_usecase.dart::RegisterUseCase" {
+  +BaseAuthenticationRepository authenticationRepository
+  +dynamic execute()
+}
+
+"nyt::features::authentication::domain::use_cases::register_usecase.dart::RegisterUseCase" o-- "nyt::features::authentication::domain::repositories::base_authentication_repository.dart::BaseAuthenticationRepository"
+"nyt::core::utilities::base_usecase.dart::BaseUseCase" <|-- "nyt::features::authentication::domain::use_cases::register_usecase.dart::RegisterUseCase"
+
+class "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" {
+  +ISimpleUserData userData
+  -FirebaseAuth _auth
+  -LocalAuthentication _localAuth
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +GlobalKey<FormState> loginFormKey
+  -GoogleSignIn _googleSignIn
+  +dynamic register()
+  +dynamic registerWithGoogle()
+}
+
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" o-- "nyt::core::service::local::interface::i_simple_user_data.dart::ISimpleUserData"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" o-- "local_auth::src::local_auth.dart::LocalAuthentication"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit" o-- "google_sign_in::google_sign_in.dart::GoogleSignIn"
+"bloc::src::cubit.dart::Cubit" <|-- "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthCubit"
+
+class "nyt::features::authentication::presentation::controller::auth_cubit.dart::UserModel" {
+  +String email
+  +String name
+  +String token
+  +Map<String, dynamic> toJson()
+}
+
+abstract class "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthState" {
+  +List<Object> props
+}
+
+"equatable::src::equatable.dart::Equatable" <|-- "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthState"
+
+class "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthInitial" {
+}
+
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthState" <|-- "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthInitial"
+
+class "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthLoading" {
+}
+
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthState" <|-- "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthLoading"
+
+class "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthLoaded" {
+  +User userData
+  +List<Object> props
+}
+
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthLoaded" o-- "firebase_auth::firebase_auth.dart::User"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthState" <|-- "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthLoaded"
+
+class "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthError" {
+  +ErrorMessageModel errorMessage
+  +List<Object> props
+}
+
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthError" o-- "nyt::core::service::remote::error_message_remote.dart::ErrorMessageModel"
+"nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthState" <|-- "nyt::features::authentication::presentation::controller::auth_cubit.dart::AuthError"
+
+class "nyt::features::authentication::presentation::pages::auth_screen.dart::LoginScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::authentication::presentation::pages::auth_screen.dart::LoginScreen"
+
+class "nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthHeader" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthHeader"
+
+class "nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthForm" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthForm"
+
+class "nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthBackground" {
+  +Widget body
+  +Widget build()
+}
+
+"nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthBackground" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::authentication::presentation::pages::auth_screen.dart::_AuthBackground"
+
+class "nyt::features::authentication::presentation::pages::auth_screen.dart::_ForgetPassword" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::authentication::presentation::pages::auth_screen.dart::_ForgetPassword"
+
+class "nyt::features::authentication::presentation::pages::auth_screen.dart::_LoginAccount" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::authentication::presentation::pages::auth_screen.dart::_LoginAccount"
+
+abstract class "nyt::features::news::data::data_sources::news_remote_data_source.dart::BaseNewsDataSource" {
+  +dynamic getNews()
+}
+
+class "nyt::features::news::data::data_sources::news_remote_data_source.dart::NewsDataSource" {
+  -DioConsumer _dio
+  +dynamic getNews()
+}
+
+"nyt::features::news::data::data_sources::news_remote_data_source.dart::NewsDataSource" o-- "nyt::core::service::remote::dio_consumer.dart::DioConsumer"
+"nyt::features::news::data::data_sources::news_remote_data_source.dart::BaseNewsDataSource" <|-- "nyt::features::news::data::data_sources::news_remote_data_source.dart::NewsDataSource"
+
+abstract class "nyt::features::news::data::data_sources::news_remote_data_source.dart::_NewsEndpoints" {
+  {static} +String apiKey
+  {static} +String news
+  {static} +String newsByCategory()
+}
+
+class "nyt::features::news::data::repositories::news_repository.dart::NewsRepository" {
+  +BaseNewsDataSource newsDataSource
+  +dynamic getNews()
+}
+
+"nyt::features::news::data::repositories::news_repository.dart::NewsRepository" o-- "nyt::features::news::data::data_sources::news_remote_data_source.dart::BaseNewsDataSource"
+"nyt::features::news::domain::repositories::base_news_repository.dart::BaseNewsRepository" <|-- "nyt::features::news::data::repositories::news_repository.dart::NewsRepository"
+
+class "nyt::features::news::domain::entities::newa_request.dart::NewsRequest" {
+  +String category
+  +int page
+  +Map<String, dynamic> toJson()
+}
+
+class "nyt::features::news::domain::entities::news_response.dart::NewsResponse" {
+  +String section
+  +String title
+  +String url
+  +String abstract
+  +String byline
+  +String publishedDate
+}
+
+abstract class "nyt::features::news::domain::repositories::base_news_repository.dart::BaseNewsRepository" {
+  +dynamic getNews()
+}
+
+class "nyt::features::news::domain::use_cases::get_news_usecase.dart::GetNewsUseCase" {
+  +BaseNewsRepository newsRepository
+  +dynamic execute()
+}
+
+"nyt::features::news::domain::use_cases::get_news_usecase.dart::GetNewsUseCase" o-- "nyt::features::news::domain::repositories::base_news_repository.dart::BaseNewsRepository"
+"nyt::core::utilities::base_usecase.dart::BaseUseCase" <|-- "nyt::features::news::domain::use_cases::get_news_usecase.dart::GetNewsUseCase"
+
+class "nyt::features::news::presentation::controller::categories::categories_cubit.dart::SelectedCategoryCubit" {
+  +void setCategory()
+}
+
+"bloc::src::cubit.dart::Cubit" <|-- "nyt::features::news::presentation::controller::categories::categories_cubit.dart::SelectedCategoryCubit"
+
+abstract class "nyt::features::news::presentation::controller::categories::categories_cubit.dart::SelectedCategoryEvent" {
+}
+
+class "nyt::features::news::presentation::controller::categories::categories_cubit.dart::SetCategory" {
+  +int categoryId
+}
+
+"nyt::features::news::presentation::controller::categories::categories_cubit.dart::SelectedCategoryEvent" <|-- "nyt::features::news::presentation::controller::categories::categories_cubit.dart::SetCategory"
+
+class "nyt::features::news::presentation::controller::categories::categories_cubit.dart::SelectedCategoryState" {
+  +int categoryId
+}
+
+class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsCubit" {
+  +GetNewsUseCase getNewsUseCase
+  +List<NewsResponse> newsList
+  +int page
+  +dynamic getCategories()
+}
+
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsCubit" o-- "nyt::features::news::domain::use_cases::get_news_usecase.dart::GetNewsUseCase"
+"bloc::src::cubit.dart::Cubit" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsCubit"
+
+abstract class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState" {
+  +List<Object> props
+}
+
+"equatable::src::equatable.dart::Equatable" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState"
+
+class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsInitial" {
+}
+
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsInitial"
+
+class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsLoading" {
+}
+
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsLoading"
+
+class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsPagination" {
+}
+
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsPagination"
+
+class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsLoaded" {
+  +List<NewsResponse> newsResponse
+  +List<Object> props
+}
+
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsLoaded"
+
+class "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsError" {
+  +ErrorMessageModel errorMessage
+  +List<Object> props
+}
+
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsError" o-- "nyt::core::service::remote::error_message_remote.dart::ErrorMessageModel"
+"nyt::features::news::presentation::controller::news::news_cubit.dart::NewsState" <|-- "nyt::features::news::presentation::controller::news::news_cubit.dart::NewsError"
+
+class "nyt::features::news::presentation::pages::home_screen.dart::HomeScreen" {
+  +State<HomeScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "nyt::features::news::presentation::pages::home_screen.dart::HomeScreen"
+
+class "nyt::features::news::presentation::pages::home_screen.dart::_HomeScreenState" {
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "nyt::features::news::presentation::pages::home_screen.dart::_HomeScreenState"
+
+class "nyt::features::news::presentation::pages::news_details.dart::NewsDetailsScreen" {
+  +NewsResponse newsResponse
+  +Widget build()
+  -dynamic _launchUrl()
+}
+
+"nyt::features::news::presentation::pages::news_details.dart::NewsDetailsScreen" o-- "nyt::features::news::domain::entities::news_response.dart::NewsResponse"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::pages::news_details.dart::NewsDetailsScreen"
+
+class "nyt::features::news::presentation::widgets::home_screen::categories_data.dart::Category" {
+  +int id
+  +String name
+}
+
+class "nyt::features::news::presentation::widgets::home_screen::categories_widget.dart::CategoriesWidget" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::widgets::home_screen::categories_widget.dart::CategoriesWidget"
+
+class "nyt::features::news::presentation::widgets::home_screen::category_item.dart::CategoryItem" {
+  +Category categoryItem
+  +bool isSelected
+  +void Function() onTap
+  +Widget build()
+}
+
+"nyt::features::news::presentation::widgets::home_screen::category_item.dart::CategoryItem" o-- "nyt::features::news::presentation::widgets::home_screen::categories_data.dart::Category"
+"nyt::features::news::presentation::widgets::home_screen::category_item.dart::CategoryItem" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::widgets::home_screen::category_item.dart::CategoryItem"
+
+class "nyt::features::news::presentation::widgets::home_screen::news_list_widget.dart::NewsListWidget" {
+  -RefreshController _refreshController
+  -void _onRefresh()
+  +Widget build()
+}
+
+"nyt::features::news::presentation::widgets::home_screen::news_list_widget.dart::NewsListWidget" o-- "pull_to_refresh::src::smart_refresher.dart::RefreshController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::widgets::home_screen::news_list_widget.dart::NewsListWidget"
+
+class "nyt::features::news::presentation::widgets::home_screen::product_item.dart::ProductItem" {
+  +NewsResponse newsDetails
+  +Widget build()
+  -void _navigateToDetailsScreen()
+  -Widget _buildDetailsSection()
+  -Widget _buildTitle()
+  -Widget _buildAuthor()
+  -Widget _buildSource()
+}
+
+"nyt::features::news::presentation::widgets::home_screen::product_item.dart::ProductItem" o-- "nyt::features::news::domain::entities::news_response.dart::NewsResponse"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::widgets::home_screen::product_item.dart::ProductItem"
+
+class "nyt::features::news::presentation::widgets::news_details::cusom_button.dart::CustomButton" {
+  +void Function() onPressed
+  +String buttonText
+  +Widget build()
+}
+
+"nyt::features::news::presentation::widgets::news_details::cusom_button.dart::CustomButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::widgets::news_details::cusom_button.dart::CustomButton"
+
+class "nyt::features::news::presentation::widgets::news_details::custom_text.dart::CustomText" {
+  +String text
+  +double fontSize
+  +FontWeight fontWeight
+  +Widget build()
+}
+
+"nyt::features::news::presentation::widgets::news_details::custom_text.dart::CustomText" o-- "dart::ui::FontWeight"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::features::news::presentation::widgets::news_details::custom_text.dart::CustomText"
+
+class "nyt::features::splash_screen.dart::SplashScreen" {
+  +_SplashScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "nyt::features::splash_screen.dart::SplashScreen"
+
+class "nyt::features::splash_screen.dart::_SplashScreenState" {
+  -AnimationController _controller
+  -Animation<double> _animation
+  +ISimpleUserData userData
+  +void initState()
+  +Widget build()
+  +void dispose()
+}
+
+"nyt::features::splash_screen.dart::_SplashScreenState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"nyt::features::splash_screen.dart::_SplashScreenState" o-- "flutter::src::animation::animation.dart::Animation<double>"
+"nyt::features::splash_screen.dart::_SplashScreenState" o-- "nyt::core::service::local::interface::i_simple_user_data.dart::ISimpleUserData"
+"flutter::src::widgets::framework.dart::State" <|-- "nyt::features::splash_screen.dart::_SplashScreenState"
+"flutter::src::widgets::ticker_provider.dart::TickerProviderStateMixin" <|-- "nyt::features::splash_screen.dart::_SplashScreenState"
+
+class "nyt::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "nyt::main.dart::MyApp"
+
+
+@enduml
