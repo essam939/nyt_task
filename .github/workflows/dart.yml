@@ -21,7 +21,7 @@ jobs:
       # Set up Flutter
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'latest'  # or specify a specific version if needed
+          flutter-version: '3.22.0'  # or specify a specific version if needed
 
       # Cache Flutter dependencies
       - name: Cache Flutter pub dependencies
