@@ -36,7 +36,7 @@ class DBHelper {
     await initDB();
 
     Batch batch = db!.batch();
-    newsResponseList.forEach((newsResponse) {
+    for (var newsResponse in newsResponseList) {
       batch.insert(
         tableName,
         {
@@ -48,7 +48,7 @@ class DBHelper {
           publishedDate: newsResponse.publishedDate,
         },
       );
-    });
+    }
     await batch.commit(noResult: true);
   }
 

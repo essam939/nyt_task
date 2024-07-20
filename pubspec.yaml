@@ -55,12 +55,15 @@ dependencies:
   firebase_auth: ^4.19.0
   google_sign_in: ^6.2.1
   protobuf: ^3.1.0
-  dcdg: ^4.1.0
+  workmanager: ^0.5.2
+#  dcdg: ^4.1.0
   path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.3.3  # Use the latest version
+  protoc_plugin: ^21.0.0 # Use the latest version
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

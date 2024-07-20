@@ -1,0 +1,9 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+    builders:
+      protoc_builder:
+        options:
+          proto_path: lib/protos
+          out_path: lib/generated
