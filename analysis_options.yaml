@@ -21,8 +21,25 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+  # Uncomment the lines below to customize lint rules for your project.
+  # You can find available lints at https://dart.dev/lints.
+
+  # Disabling the `avoid_print` rule can be useful if you want to allow `print` statements.
+  # avoid_print: false
+
+  # Enabling the `prefer_single_quotes` rule encourages the use of single quotes in Dart code.
+  # prefer_single_quotes: true
+
+  # Add or remove other lint rules as needed.
+  # For example:
+   camel_case_types: true
+   constant_identifier_names: true
+   empty_constructor_bodies: false
+   file_names: true
+   non_constant_identifier_names: true
+   prefer_const_constructors: true
+   prefer_final_fields: true
+   sort_constructors_first: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

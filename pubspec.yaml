@@ -58,13 +58,15 @@ dependencies:
   workmanager: ^0.5.2
 #  dcdg: ^4.1.0
   path: ^1.9.0
+  bloc_test: ^9.1.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.3.3
+  mockito: ^5.4.4
   protoc_plugin: ^21.0.0
-  mocktail: ^1.0.4
+  build_test: ^2.2.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

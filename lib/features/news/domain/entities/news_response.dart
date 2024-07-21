@@ -26,6 +26,16 @@ class NewsResponse {
       publishedDate:json['published_date']??"N/A",
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'abstract': abstract,
+      'url': url,
+      'section': section,
+      'byline': byline,
+      'publishedDate': publishedDate,
+    };
+  }
 }
 
 
