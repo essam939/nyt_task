@@ -13,41 +13,37 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  late ISimpleUserData userData=
-  UserDataFactory.createUserData(LocalDataType.secured);
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+  late final ISimpleUserData userData;
+
   @override
   void initState() {
     super.initState();
+
+    userData = UserDataFactory.createUserData(LocalDataType.secured);
+
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2), // Adjust the duration as per your requirement
+      duration: const Duration(seconds: 2),
     );
 
     _animation = Tween<double>(
       begin: 0,
       end: 2,
-    ).animate(_controller);
+    ).animate(_controller)
+      ..addStatusListener(_animationStatusListener);
 
     _controller.forward();
+  }
 
-    // Navigate to the next screen after the animation completes
-    _animation.addStatusListener((status) async {
-      if (status == AnimationStatus.completed) {
-        final result = await userData.readJsonMap("userData");
-        if(result!=null) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
-          );
-        }else{
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const LoginScreen()),
-          );
-        }
-
-      }
-    });
+  void _animationStatusListener(AnimationStatus status) async {
+    if (status == AnimationStatus.completed) {
+      final result = await userData.readJsonMap("userData");
+      if (!mounted) return; // Check if the widget is still mounted
+      final nextPage = result != null ? const HomeScreen() : const LoginScreen();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => nextPage));
+    }
   }
 
   @override
@@ -56,9 +52,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: Center(
         child: ScaleTransition(
           scale: _animation,
-          child: const FlutterLogo(
-            size: 200,
-          ),
+          child: const FlutterLogo(size: 200),
         ),
       ),
     );
@@ -66,6 +60,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   void dispose() {
+    _controller.removeStatusListener(_animationStatusListener);
     _controller.dispose();
     super.dispose();
   }

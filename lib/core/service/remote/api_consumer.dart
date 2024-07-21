@@ -8,6 +8,7 @@ import 'package:nyt/core/error/failure.dart';
 
 
 import 'dio_consumer.dart';
+import 'dio_interceptor.dart';
 import 'error_message_remote.dart';
 
 class ApiConsumer extends DioConsumer {
@@ -17,6 +18,8 @@ class ApiConsumer extends DioConsumer {
   ApiConsumer._internal() {
     dio = Dio();
     dio.options.baseUrl = 'https://api.nytimes.com/';
+    dio.options.connectTimeout = const Duration(seconds: 5);
+    dio.options.receiveTimeout = const Duration(seconds: 5);
     dio.interceptors.add(
       LogInterceptor(
         responseBody: true,
@@ -24,6 +27,7 @@ class ApiConsumer extends DioConsumer {
         logPrint: (Object? object) => log(object.toString(), name: 'HTTP'),
       ),
     );
+    dio.interceptors.add(DioInterceptor());
   }
 
   late final Dio dio;

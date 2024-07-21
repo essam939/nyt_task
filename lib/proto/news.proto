@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message NewsRequest {
+  string category = 1;
+  int32 page = 2;
+}

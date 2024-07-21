@@ -62,8 +62,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.3.3  # Use the latest version
-  protoc_plugin: ^21.0.0 # Use the latest version
+  build_runner: ^2.3.3
+  protoc_plugin: ^21.0.0
+  mocktail: ^1.0.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
