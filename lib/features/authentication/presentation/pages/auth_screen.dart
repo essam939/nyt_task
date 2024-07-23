@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -14,8 +15,8 @@ part '../widgets/login/auth_background.dart';
 part '../widgets/login/forget_password.dart';
 part '../widgets/login/login_account.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class AuthScreen extends StatelessWidget {
+  const AuthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
           context.loaderOverlay.show();
         } else if (state is AuthLoaded) {
           context.loaderOverlay.hide();
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> const HomeScreen()));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const HomeScreen()), (route) => false);
         } else if (state is AuthError) {
           context.loaderOverlay.hide();
           var snackBar = SnackBar(

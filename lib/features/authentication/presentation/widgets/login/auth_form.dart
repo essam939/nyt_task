@@ -18,14 +18,21 @@ class _AuthForm extends StatelessWidget {
               textInputAction: TextInputAction.next,
               controller: authController.emailController,
               keyboardType: TextInputType.emailAddress,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9._%+-@]')),
+              ],
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter phone number';
+                  return 'Please enter an email address';
+                }
+                final emailRegExp = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                if (!emailRegExp.hasMatch(value)) {
+                  return 'Please enter a valid email address';
                 }
                 return null;
               },
               decoration: const InputDecoration(
-                labelText: 'phone number',
+                labelText: 'Email Address',
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
                 ),
@@ -44,13 +51,20 @@ class _AuthForm extends StatelessWidget {
                 controller: authController.passwordController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter password';
+                    return 'Please enter a password';
+                  }
+                  if (value.length < 8) {
+                    return 'Password must be at least 8 characters long';
+                  }
+                  final passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$');
+                  if (passwordRegExp.hasMatch(value)) {
+                    return 'Password must contain letters and numbers';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
-                  labelText: 'password',
+                  labelText: 'Password',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
                   ),

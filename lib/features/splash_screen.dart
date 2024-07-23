@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     if (status == AnimationStatus.completed) {
       final result = await userData.readJsonMap("userData");
       if (!mounted) return; // Check if the widget is still mounted
-      final nextPage = result != null ? const HomeScreen() : const LoginScreen();
+      final nextPage = result != null ? const HomeScreen() : const AuthScreen();
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => nextPage));
     }
   }

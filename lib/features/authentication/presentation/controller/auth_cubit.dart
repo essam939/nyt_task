@@ -12,6 +12,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
+
+  AuthCubit() : super(AuthInitial());
   final ISimpleUserData userData =
       UserDataFactory.createUserData(LocalDataType.secured);
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,8 +23,6 @@ class AuthCubit extends Cubit<AuthState> {
   final passwordController = TextEditingController(text: "Moh@med.com5");
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-  AuthCubit() : super(AuthInitial());
 
   Future<void> register() async {
     if (loginFormKey.currentState!.validate()) {
@@ -157,9 +157,6 @@ class AuthCubit extends Cubit<AuthState> {
 }
 
 class UserModel {
-  final String email;
-  final String name;
-  final String token;
   UserModel({required this.email, required this.name, required this.token});
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -168,6 +165,9 @@ class UserModel {
       token: json['token'] as String,
     );
   }
+  final String email;
+  final String name;
+  final String token;
   Map<String, dynamic> toJson() {
     return {
       'email': email,
