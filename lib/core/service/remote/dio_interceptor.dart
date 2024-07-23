@@ -5,6 +5,7 @@ class DioInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (kDebugMode) {
+      options.headers={'Content-Type': 'application/x-protobuf'};
       print('REQUEST[${options.method}] => PATH: ${options.path}');
     }
     super.onRequest(options, handler);

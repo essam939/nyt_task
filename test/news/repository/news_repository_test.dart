@@ -5,7 +5,6 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:nyt/core/error/exceptions.dart';
-import 'package:nyt/core/error/failure.dart';
 import 'package:nyt/core/service/remote/error_message_remote.dart';
 import 'package:nyt/features/news/data/data_sources/news_remote_data_source.dart';
 import 'package:nyt/features/news/domain/entities/newa_request.dart';
@@ -36,7 +35,7 @@ void main() {
     ),
     // Add more NewsResponse instances as needed
   ];
-  final tFailure = ServerFailure(ErrorMessageModel(msg: 'Error'));
+  const tFailure = ServerFailure(ErrorMessageModel(msg: 'Error'));
 
   test('should return List<NewsResponse> when data source returns successful response', () async {
     // Arrange
@@ -55,13 +54,13 @@ void main() {
   test('should return Failure when data source returns an error', () async {
     // Arrange
     when(mockBaseNewsDataSource.getNews(any))
-        .thenAnswer((_) async => Left(tFailure));
+        .thenAnswer((_) async => const Left(tFailure));
 
     // Act
     final result = await newsRepository.getNews(tNewsRequest);
 
     // Assert
-    expect(result, Left(tFailure));
+    expect(result, const Left(tFailure));
     verify(mockBaseNewsDataSource.getNews(tNewsRequest)).called(1);
     verifyNoMoreInteractions(mockBaseNewsDataSource);
   });

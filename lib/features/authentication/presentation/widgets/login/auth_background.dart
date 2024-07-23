@@ -2,8 +2,8 @@
 part of '../../pages/auth_screen.dart';
 
 class _AuthBackground extends StatelessWidget {
-  final Widget body;
   const _AuthBackground({required this.body});
+  final Widget body;
 
   @override
   Widget build(BuildContext context) {

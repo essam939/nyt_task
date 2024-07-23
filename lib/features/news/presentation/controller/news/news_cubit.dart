@@ -11,11 +11,11 @@ import 'package:nyt/features/news/domain/use_cases/get_news_usecase.dart';
 part 'news_state.dart';
 
 class NewsCubit extends Cubit<NewsState> {
+
+  NewsCubit({required this.getNewsUseCase}) : super(NewsInitial());
   final GetNewsUseCase getNewsUseCase;
   List<NewsResponse> newsList = [];
   int page = 1;
-
-  NewsCubit({required this.getNewsUseCase}) : super(NewsInitial());
 
   Future<void> getCategories(NewsRequest newsRequest) async {
     if (newsRequest.page == 1) {

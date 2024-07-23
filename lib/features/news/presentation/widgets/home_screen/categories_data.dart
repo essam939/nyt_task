@@ -1,7 +1,7 @@
 class Category {
+  Category({required this.id, required this.name});
   int id;
   String name;
-  Category({required this.id, required this.name});
 }
 List<Category> categoriesList = [
   Category(id: 1, name: "style"),

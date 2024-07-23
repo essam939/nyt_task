@@ -10,8 +10,8 @@ abstract class BaseAuthenticationDataSource {
   Future<Either<Failure, RegisterResponse>> register(RegisterRequest request);
 }
 class AuthenticationDataSource extends BaseAuthenticationDataSource {
-  final DioConsumer _dio;
   AuthenticationDataSource(this._dio);
+  final DioConsumer _dio;
   @override
   Future<Either<Failure, RegisterResponse>> register(
       RegisterRequest request,

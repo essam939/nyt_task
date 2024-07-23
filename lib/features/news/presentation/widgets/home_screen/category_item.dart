@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nyt/features/news/presentation/widgets/home_screen/categories_data.dart';
 
 class CategoryItem extends StatelessWidget {
-  final Category categoryItem;
-  final bool isSelected;
-  final VoidCallback onTap;
 
   const CategoryItem({
     super.key,
@@ -12,6 +9,9 @@ class CategoryItem extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
   });
+  final Category categoryItem;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,4 @@
 class RegisterResponse {
- final Client client;
-  final String accessToken;
-  final String tokenType;
-  final int expiresIn;
 
 
   const RegisterResponse({
@@ -20,6 +16,10 @@ class RegisterResponse {
       expiresIn: json['expires_in'] as int,
     );
   }
+ final Client client;
+  final String accessToken;
+  final String tokenType;
+  final int expiresIn;
 
   Map<String, dynamic> toJson() {
     return {
@@ -31,9 +31,6 @@ class RegisterResponse {
     }
 }
 class Client {
-  final int id;
-  final String name;
-  final String phone;
   const Client({
     required this.id,
     required this.name,
@@ -47,6 +44,9 @@ class Client {
       phone: json['phone'] as String,
     );
   }
+  final int id;
+  final String name;
+  final String phone;
 
   Map<String, dynamic> toJson() {
     return {

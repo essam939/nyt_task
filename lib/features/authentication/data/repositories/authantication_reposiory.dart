@@ -8,9 +8,9 @@ import 'package:nyt/features/authentication/domain/repositories/base_authenticat
 
 
 class AuthenticationRepository extends BaseAuthenticationRepository {
-  final BaseAuthenticationDataSource authenticationDataSource;
 
   AuthenticationRepository({required this.authenticationDataSource});
+  final BaseAuthenticationDataSource authenticationDataSource;
 
   @override
   Future<Either<Failure, RegisterResponse>> login(RegisterRequest request) async {

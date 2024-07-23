@@ -10,8 +10,8 @@ abstract class BaseNewsDataSource {
   Future<Either<Failure, List<NewsResponse>>> getNews(NewsRequest newsRequest);
 }
 class NewsDataSource extends BaseNewsDataSource {
-  final DioConsumer _dio;
   NewsDataSource(this._dio);
+  final DioConsumer _dio;
   @override
   Future<Either<Failure, List<NewsResponse>>> getNews(NewsRequest newsRequest) async {
     final responseEither = await _dio.get(

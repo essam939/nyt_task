@@ -7,9 +7,9 @@ import 'package:nyt/features/news/presentation/widgets/news_details/custom_text.
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
-  final NewsResponse newsResponse;
 
   const NewsDetailsScreen({super.key, required this.newsResponse});
+  final NewsResponse newsResponse;
 
   @override
   Widget build(BuildContext context) {

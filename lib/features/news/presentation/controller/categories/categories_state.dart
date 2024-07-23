@@ -4,12 +4,12 @@ part of 'categories_cubit.dart';
 abstract class SelectedCategoryEvent {}
 
 class SetCategory extends SelectedCategoryEvent {
-  final int categoryId;
   SetCategory(this.categoryId);
+  final int categoryId;
 }
 
 // Define the state
 class SelectedCategoryState {
-  final int categoryId;
   SelectedCategoryState(this.categoryId);
+  final int categoryId;
 }

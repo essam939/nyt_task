@@ -7,9 +7,9 @@ import 'package:nyt/features/news/domain/repositories/base_news_repository.dart'
 
 
 class GetNewsUseCase extends BaseUseCase<List<NewsResponse>, NewsRequest > {
-  final BaseNewsRepository newsRepository;
 
   GetNewsUseCase(this.newsRepository);
+  final BaseNewsRepository newsRepository;
 
   @override
   Future<Either<Failure, List<NewsResponse>>> execute(NewsRequest params) async {

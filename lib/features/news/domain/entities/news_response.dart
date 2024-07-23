@@ -2,12 +2,6 @@
 
 
 class NewsResponse {
-  final String section;
-  final String title;
-  final String url;
-  final String abstract;
-  final String byline;
-  final String publishedDate;
   NewsResponse({
     required this.section,
     required this.title,
@@ -26,6 +20,12 @@ class NewsResponse {
       publishedDate:json['published_date']??"N/A",
     );
   }
+  final String section;
+  final String title;
+  final String url;
+  final String abstract;
+  final String byline;
+  final String publishedDate;
   Map<String, dynamic> toJson() {
     return {
       'title': title,

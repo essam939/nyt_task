@@ -8,9 +8,9 @@ import 'local/interface/i_simple_user_data.dart';
 
 class SimpleSecureData extends ISimpleUserData {
 
-  final FlutterSecureStorage _pref;
-
   SimpleSecureData(this._pref);
+
+  final FlutterSecureStorage _pref;
 
   @override
   FutureOr<bool> delete(String key) async {

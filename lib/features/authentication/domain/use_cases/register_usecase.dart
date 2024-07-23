@@ -10,9 +10,9 @@ import 'package:nyt/features/authentication/domain/repositories/base_authenticat
 
 
 class RegisterUseCase extends BaseUseCase<RegisterResponse, RegisterRequest> {
-  final BaseAuthenticationRepository authenticationRepository;
 
   RegisterUseCase(this.authenticationRepository);
+  final BaseAuthenticationRepository authenticationRepository;
 
   @override
   Future<Either<Failure, RegisterResponse>> execute(RegisterRequest params) async {

@@ -12,8 +12,6 @@ import 'dio_interceptor.dart';
 import 'error_message_remote.dart';
 
 class ApiConsumer extends DioConsumer {
-  factory ApiConsumer() => _instance;
-  static final ApiConsumer _instance = ApiConsumer._internal();
 
   ApiConsumer._internal() {
     dio = Dio();
@@ -29,6 +27,8 @@ class ApiConsumer extends DioConsumer {
     );
     dio.interceptors.add(DioInterceptor());
   }
+  factory ApiConsumer() => _instance;
+  static final ApiConsumer _instance = ApiConsumer._internal();
 
   late final Dio dio;
 

@@ -7,9 +7,9 @@ import 'package:nyt/features/news/domain/entities/news_response.dart';
 import '../../domain/repositories/base_news_repository.dart';
 
 class NewsRepository extends BaseNewsRepository {
-  final BaseNewsDataSource newsDataSource;
 
   NewsRepository({required this.newsDataSource});
+  final BaseNewsDataSource newsDataSource;
 
   @override
   Future<Either<Failure, List<NewsResponse>>> getNews(NewsRequest newsRequest) async {

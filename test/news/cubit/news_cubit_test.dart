@@ -7,7 +7,6 @@ import 'package:mockito/mockito.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:nyt/core/error/exceptions.dart';
-import 'package:nyt/core/error/failure.dart';
 import 'package:nyt/core/service/remote/error_message_remote.dart';
 import 'package:nyt/core/utilities/db_helper.dart';
 import 'package:nyt/features/news/domain/entities/newa_request.dart';
@@ -42,7 +41,7 @@ void main() {
     ),
     // Add more NewsResponse instances as needed
   ];
-  final tFailure = ServerFailure(ErrorMessageModel(msg: 'Error'));
+  const tFailure = ServerFailure(ErrorMessageModel(msg: 'Error'));
 
   test('initial state should be NewsInitial', () {
     expect(newsCubit.state, equals(NewsInitial()));
@@ -71,7 +70,7 @@ void main() {
     'should emit NewsError when fetching data fails',
     build: () {
       when(mockGetNewsUseCase.execute(any))
-          .thenAnswer((_) async => Left(tFailure));
+          .thenAnswer((_) async => const Left(tFailure));
       when(mockConnectivity.checkConnectivity())
           .thenAnswer((_) async => [ConnectivityResult.mobile]);
       return newsCubit;
@@ -90,7 +89,7 @@ void main() {
     'should emit NewsError when there is no internet connection and no offline data',
     build: () {
       when(mockGetNewsUseCase.execute(any))
-          .thenAnswer((_) async => Left(tFailure));
+          .thenAnswer((_) async => const Left(tFailure));
       when(mockConnectivity.checkConnectivity())
           .thenAnswer((_) async => [ConnectivityResult.none]);
       // Mocking DBHelper calls
@@ -101,7 +100,7 @@ void main() {
     act: (cubit) => cubit.getCategories(tNewsRequest),
     expect: () => [
       NewsLoading(),
-      NewsError(errorMessage: ErrorMessageModel(msg: "No internet connection. No data available offline.")),
+      NewsError(errorMessage: const ErrorMessageModel(msg: "No internet connection. No data available offline.")),
     ],
     verify: (_) {
       verify(DBHelper.dbHelper.fetchAllRecords()).called(1);

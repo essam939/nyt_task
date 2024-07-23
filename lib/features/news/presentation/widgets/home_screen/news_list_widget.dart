@@ -8,9 +8,9 @@ import 'package:nyt/features/news/presentation/widgets/home_screen/product_item.
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsListWidget extends StatelessWidget {
-  final _refreshController = RefreshController(initialRefresh: false);
 
   NewsListWidget({super.key});
+  final _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh(BuildContext context) async {
     context.read<NewsCubit>().getCategories(NewsRequest(page: 1,category: categoriesList

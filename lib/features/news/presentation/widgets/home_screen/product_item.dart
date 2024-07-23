@@ -4,12 +4,12 @@ import 'package:nyt/features/news/presentation/pages/news_details.dart';
 
 
 class ProductItem extends StatelessWidget {
-  final NewsResponse newsDetails;
 
   const ProductItem({
     super.key,
     required this.newsDetails,
   });
+  final NewsResponse newsDetails;
 
   @override
   Widget build(BuildContext context) {
