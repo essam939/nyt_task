@@ -13,7 +13,7 @@
 2. **Run the Project:**
    ```bash
    flutter run
-   
+
 ## Project Structure
  ```
 📦lib
@@ -118,6 +118,9 @@
  ┃ ┗ 📜protoc
  ┗ 📜main.dart
  ```
+## Project Diagram
+![alt text](https://github.com/essam939/nyt_task/blob/main/diagram.png?raw=true)
+
 ## Detailed Description
 # Advanced Networking and Data Handling
 1. Networking Layer: Built with Dio, handling HTTP requests and networking breakdowns.
@@ -134,7 +137,7 @@
 3. Conflict Resolution: Various strategies for conflict resolution have been developed to ensure the integrity of data in the offline mode.
 
 # Design Pattern: Clean Architecture
-   Clean Architecture was chosen to be able to make the codebase maintainable, scalable, and testable by separating different concerns. Basically, it breaks the project down into different layers:
+Clean Architecture was chosen to be able to make the codebase maintainable, scalable, and testable by separating different concerns. Basically, it breaks the project down into different layers:
 1. Presentation Layer: This layer holds the UI and controllers with Cubits/Bloc for state management.
 2. Domain Layer: This is where all business logic goes; use cases and entities.
 3. Data Layer: Manages data operations, including data sources and repositories.
