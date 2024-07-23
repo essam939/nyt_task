@@ -15,6 +15,7 @@
    flutter run
    
 ## Project Structure
+ ```
 📦lib
  ┣ 📂core
  ┃ ┣ 📂error
@@ -116,7 +117,7 @@
  ┣ 📂scripts
  ┃ ┗ 📜protoc
  ┗ 📜main.dart
-
+ ```
 ## Detailed Description
 # Advanced Networking and Data Handling
 1. Networking Layer: Built with Dio, handling HTTP requests and networking breakdowns.
