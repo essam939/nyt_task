@@ -1,13 +1,10 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Flutter CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build_android:
@@ -15,15 +12,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'  # Update to your desired Flutter version
 
-      - name: Install dependencies
-        run: flutter pub get
+      - run: flutter pub get
 
       - name: Build APK
         run: flutter build apk --release  # Use --release for production-ready builds
@@ -33,15 +34,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'  # Update to your desired Flutter version
 
-      - name: Install dependencies
-        run: flutter pub get
+      - run: flutter pub get
 
-      - name: Build ipa
-        run: flutter build ipa --no-codesign  # Use --release for production-ready builds
+      - name: Build iOS
+        run: flutter build ios --release  # Use --release for production-ready builds
