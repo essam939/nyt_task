@@ -15,97 +15,107 @@
    flutter run
    
 ## Project Structure
-📦lib  
-┣ 📂core  
-┃ ┣ 📂error  
-┃ ┃ ┣ 📜exceptions.dart  
-┃ ┃ ┗ 📜failure.dart  
-┃ ┣ 📂service  
-┃ ┃ ┣ 📂local  
-┃ ┃ ┃ ┣ 📂interface  
-┃ ┃ ┃ ┃ ┗ 📜i_simple_user_data.dart  
-┃ ┃ ┃ ┗ 📜user_data_factory.dart  
-┃ ┃ ┣ 📂remote  
-┃ ┃ ┃ ┣ 📜api_consumer.dart  
-┃ ┃ ┃ ┣ 📜dio_consumer.dart  
-┃ ┃ ┃ ┣ 📜error_message_remote.dart  
-┃ ┃ ┃ ┗ 📜service_locator.dart  
-┃ ┃ ┣ 📜simple_secure_user_data.dart  
-┃ ┃ ┗ 📜simple_user_data.dart  
-┃ ┣ 📂utilities  
-┃ ┃ ┣ 📜base_usecase.dart  
-┃ ┃ ┣ 📜db_helper.dart  
-┃ ┃ ┣ 📜defs.dart  
-┃ ┃ ┗ 📜enums.dart  
-┃ ┗ 📜widget_life_cycle_listener.dart  
-┣ 📂features  
-┃ ┣ 📂authentication  
-┃ ┃ ┣ 📂data  
-┃ ┃ ┃ ┣ 📂data_sources  
-┃ ┃ ┃ ┃ ┣ 📜authentication_remote_data_source.dart  
-┃ ┃ ┃ ┃ ┗ 📜endpoints.dart  
-┃ ┃ ┃ ┗ 📂repositories  
-┃ ┃ ┃ ┃ ┗ 📜authantication_reposiory.dart  
-┃ ┃ ┣ 📂domain  
-┃ ┃ ┃ ┣ 📂entities  
-┃ ┃ ┃ ┃ ┣ 📜register_request.dart  
-┃ ┃ ┃ ┃ ┗ 📜register_response.dart  
-┃ ┃ ┃ ┣ 📂repositories  
-┃ ┃ ┃ ┃ ┗ 📜base_authentication_repository.dart  
-┃ ┃ ┃ ┗ 📂use_cases  
-┃ ┃ ┃ ┃ ┗ 📜register_usecase.dart  
-┃ ┃ ┗ 📂presentation  
-┃ ┃ ┃ ┣ 📂controller  
-┃ ┃ ┃ ┃ ┣ 📜auth_cubit.dart  
-┃ ┃ ┃ ┃ ┗ 📜auth_state.dart  
-┃ ┃ ┃ ┣ 📂pages  
-┃ ┃ ┃ ┃ ┗ 📜auth_screen.dart  
-┃ ┃ ┃ ┗ 📂widgets  
-┃ ┃ ┃ ┃ ┗ 📂login  
-┃ ┃ ┃ ┃ ┃ ┣ 📜auth_background.dart  
-┃ ┃ ┃ ┃ ┃ ┣ 📜auth_form.dart  
-┃ ┃ ┃ ┃ ┃ ┣ 📜auth_header.dart  
-┃ ┃ ┃ ┃ ┃ ┣ 📜forget_password.dart  
-┃ ┃ ┃ ┃ ┃ ┗ 📜login_account.dart  
-┃ ┣ 📂news  
-┃ ┃ ┣ 📂data  
-┃ ┃ ┃ ┣ 📂data_sources  
-┃ ┃ ┃ ┃ ┣ 📜endpoints.dart  
-┃ ┃ ┃ ┃ ┗ 📜news_remote_data_source.dart  
-┃ ┃ ┃ ┗ 📂repositories  
-┃ ┃ ┃ ┃ ┗ 📜news_repository.dart  
-┃ ┃ ┣ 📂domain  
-┃ ┃ ┃ ┣ 📂entities  
-┃ ┃ ┃ ┃ ┣ 📜newa_request.dart  
-┃ ┃ ┃ ┃ ┗ 📜news_response.dart  
-┃ ┃ ┃ ┣ 📂repositories  
-┃ ┃ ┃ ┃ ┗ 📜base_news_repository.dart  
-┃ ┃ ┃ ┗ 📂use_cases  
-┃ ┃ ┃ ┃ ┣ 📜get_categories.dart  
-┃ ┃ ┃ ┃ ┗ 📜get_news_usecase.dart  
-┃ ┃ ┗ 📂presentation  
-┃ ┃ ┃ ┣ 📂controller  
-┃ ┃ ┃ ┃ ┣ 📂categories  
-┃ ┃ ┃ ┃ ┃ ┣ 📜categories_cubit.dart  
-┃ ┃ ┃ ┃ ┃ ┗ 📜categories_state.dart  
-┃ ┃ ┃ ┃ ┗ 📂news  
-┃ ┃ ┃ ┃ ┃ ┣ 📜news_cubit.dart  
-┃ ┃ ┃ ┃ ┃ ┗ 📜news_state.dart  
-┃ ┃ ┃ ┣ 📂pages  
-┃ ┃ ┃ ┃ ┣ 📜home_screen.dart  
-┃ ┃ ┃ ┃ ┗ 📜news_details.dart  
-┃ ┃ ┃ ┗ 📂widgets  
-┃ ┃ ┃ ┃ ┣ 📂home_screen  
-┃ ┃ ┃ ┃ ┃ ┣ 📜categories_data.dart  
-┃ ┃ ┃ ┃ ┃ ┣ 📜categories_widget.dart  
-┃ ┃ ┃ ┃ ┃ ┣ 📜category_item.dart  
-┃ ┃ ┃ ┃ ┃ ┣ 📜news_list_widget.dart  
-┃ ┃ ┃ ┃ ┃ ┗ 📜product_item.dart  
-┃ ┃ ┃ ┃ ┗ 📂news_details  
-┃ ┃ ┃ ┃ ┃ ┣ 📜cusom_button.dart  
-┃ ┃ ┃ ┃ ┃ ┗ 📜custom_text.dart  
-┃ ┗ 📜splash_screen.dart  
-┗ 📜main.dart
+📦lib
+ ┣ 📂core
+ ┃ ┣ 📂error
+ ┃ ┃ ┣ 📜exceptions.dart
+ ┃ ┃ ┗ 📜failure.dart
+ ┃ ┣ 📂protobuf
+ ┃ ┃ ┣ 📜news.pb.dart
+ ┃ ┃ ┣ 📜news.pbenum.dart
+ ┃ ┃ ┣ 📜news.pbjson.dart
+ ┃ ┃ ┗ 📜news.pbserver.dart
+ ┃ ┣ 📂service
+ ┃ ┃ ┣ 📂local
+ ┃ ┃ ┃ ┣ 📂interface
+ ┃ ┃ ┃ ┃ ┗ 📜i_simple_user_data.dart
+ ┃ ┃ ┃ ┗ 📜user_data_factory.dart
+ ┃ ┃ ┣ 📂remote
+ ┃ ┃ ┃ ┣ 📜api_consumer.dart
+ ┃ ┃ ┃ ┣ 📜dio_consumer.dart
+ ┃ ┃ ┃ ┣ 📜dio_interceptor.dart
+ ┃ ┃ ┃ ┣ 📜error_message_remote.dart
+ ┃ ┃ ┃ ┗ 📜service_locator.dart
+ ┃ ┃ ┣ 📜simple_secure_user_data.dart
+ ┃ ┃ ┗ 📜simple_user_data.dart
+ ┃ ┣ 📂utilities
+ ┃ ┃ ┣ 📜base_usecase.dart
+ ┃ ┃ ┣ 📜db_helper.dart
+ ┃ ┃ ┣ 📜defs.dart
+ ┃ ┃ ┗ 📜enums.dart
+ ┃ ┗ 📜widget_life_cycle_listener.dart
+ ┣ 📂features
+ ┃ ┣ 📂authentication
+ ┃ ┃ ┣ 📂data
+ ┃ ┃ ┃ ┣ 📂data_sources
+ ┃ ┃ ┃ ┃ ┣ 📜authentication_remote_data_source.dart
+ ┃ ┃ ┃ ┃ ┗ 📜endpoints.dart
+ ┃ ┃ ┃ ┗ 📂repositories
+ ┃ ┃ ┃ ┃ ┗ 📜authantication_reposiory.dart
+ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┣ 📂entities
+ ┃ ┃ ┃ ┃ ┣ 📜register_request.dart
+ ┃ ┃ ┃ ┃ ┗ 📜register_response.dart
+ ┃ ┃ ┃ ┣ 📂repositories
+ ┃ ┃ ┃ ┃ ┗ 📜base_authentication_repository.dart
+ ┃ ┃ ┃ ┗ 📂use_cases
+ ┃ ┃ ┃ ┃ ┗ 📜register_usecase.dart
+ ┃ ┃ ┗ 📂presentation
+ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┣ 📜auth_cubit.dart
+ ┃ ┃ ┃ ┃ ┗ 📜auth_state.dart
+ ┃ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┃ ┗ 📜auth_screen.dart
+ ┃ ┃ ┃ ┗ 📂widgets
+ ┃ ┃ ┃ ┃ ┗ 📂login
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜auth_background.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜auth_form.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜auth_header.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜forget_password.dart
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜login_account.dart
+ ┃ ┣ 📂news
+ ┃ ┃ ┣ 📂data
+ ┃ ┃ ┃ ┣ 📂data_sources
+ ┃ ┃ ┃ ┃ ┣ 📜endpoints.dart
+ ┃ ┃ ┃ ┃ ┗ 📜news_remote_data_source.dart
+ ┃ ┃ ┃ ┗ 📂repositories
+ ┃ ┃ ┃ ┃ ┗ 📜news_repository.dart
+ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┣ 📂entities
+ ┃ ┃ ┃ ┃ ┣ 📜newa_request.dart
+ ┃ ┃ ┃ ┃ ┗ 📜news_response.dart
+ ┃ ┃ ┃ ┣ 📂repositories
+ ┃ ┃ ┃ ┃ ┗ 📜base_news_repository.dart
+ ┃ ┃ ┃ ┗ 📂use_cases
+ ┃ ┃ ┃ ┃ ┣ 📜get_categories.dart
+ ┃ ┃ ┃ ┃ ┗ 📜get_news_usecase.dart
+ ┃ ┃ ┗ 📂presentation
+ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┣ 📂categories
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜categories_cubit.dart
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜categories_state.dart
+ ┃ ┃ ┃ ┃ ┗ 📂news
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜news_cubit.dart
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜news_state.dart
+ ┃ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┃ ┣ 📜home_screen.dart
+ ┃ ┃ ┃ ┃ ┗ 📜news_details.dart
+ ┃ ┃ ┃ ┗ 📂widgets
+ ┃ ┃ ┃ ┃ ┣ 📂home_screen
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜categories_data.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜categories_widget.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜category_item.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜news_list_widget.dart
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜product_item.dart
+ ┃ ┃ ┃ ┃ ┗ 📂news_details
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜cusom_button.dart
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜custom_text.dart
+ ┃ ┗ 📜splash_screen.dart
+ ┣ 📂proto
+ ┃ ┗ 📜news.proto
+ ┣ 📂scripts
+ ┃ ┗ 📜protoc
+ ┗ 📜main.dart
 
 ## Detailed Description
 # Advanced Networking and Data Handling
