@@ -1,0 +1,2 @@
+#!/bin/bash
+flutter build ipa --flavor pro -t lib/main_pro.dart --export-method=ad-hoc

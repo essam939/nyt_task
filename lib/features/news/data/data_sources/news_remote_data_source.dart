@@ -16,7 +16,6 @@ class NewsDataSource extends BaseNewsDataSource {
   Future<Either<Failure, List<NewsResponse>>> getNews(NewsRequest newsRequest) async {
     final responseEither = await _dio.get(
       _NewsEndpoints.newsByCategory(newsRequest.category),
-    //  queryParameters: newsRequest.toJson(),
     );
     return responseEither.fold(
           (failure) => Left(failure),

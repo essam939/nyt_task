@@ -25,7 +25,7 @@ class ApiConsumer extends DioConsumer {
         logPrint: (Object? object) => log(object.toString(), name: 'HTTP'),
       ),
     );
-    dio.interceptors.add(DioInterceptor());
+    dio.interceptors.add(DioInterceptor(dio: dio));
   }
   factory ApiConsumer() => _instance;
   static final ApiConsumer _instance = ApiConsumer._internal();
