@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package news;
+
+message NewsResponse {
+  string section = 1;
+  string title = 2;
+  string url = 3;
+  string abstract = 4;
+  string byline = 5;
+  string published_date = 6;
+}
+
+message GetNewsRequest {}
+
+message GetNewsResponse {
+  repeated NewsResponse news = 1;
+}
+
+service NewsService {
+  rpc GetNews (GetNewsRequest) returns (GetNewsResponse);
+}
