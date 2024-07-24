@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nyt/features/news/domain/entities/newa_request.dart';
+import 'package:nyt/core/protobuf/news_request/news.pb.dart';
 import 'package:nyt/features/news/presentation/controller/categories/categories_cubit.dart';
 import 'package:nyt/features/news/presentation/controller/news/news_cubit.dart';
 import 'package:nyt/features/news/presentation/widgets/home_screen/categories_data.dart';
-import 'package:nyt/features/news/presentation/widgets/home_screen/product_item.dart';
+import 'package:nyt/features/news/presentation/widgets/home_screen/news_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsListWidget extends StatelessWidget {
@@ -45,7 +45,7 @@ class NewsListWidget extends StatelessWidget {
                   final newsData = news[index];
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: ProductItem(newsDetails: newsData),
+                    child: NewsItem(newsDetails: newsData),
                   );
                 },
               ),

@@ -1,5 +1,6 @@
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
-import 'package:nyt/features/news/domain/entities/news_response.dart';
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -11,12 +12,7 @@ class DBHelper {
   final String dbName = "history.db";
   final String tableName = "news_history";
   final String colId = "id";
-  final String section = "section";
-  final String title = "title";
-  final String url = "url";
-  final String abstract = "abstract";
-  final String byline = "byline";
-  final String publishedDate = "published_date";
+  final String dataColumn = "data"; // Column to store serialized protobuf data
 
   Database? db;
 
@@ -24,10 +20,21 @@ class DBHelper {
     String directory = await getDatabasesPath();
     String path = join(directory, dbName);
 
-    db = await openDatabase(path, version: 1, onCreate: (db, version) {
-      db.execute(
-          "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $section TEXT, $title TEXT, $url TEXT, $abstract TEXT, $byline TEXT, $publishedDate TEXT)");
-    });
+    db = await openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) {
+        db.execute(
+            "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $dataColumn BLOB)");
+      },
+      onUpgrade: (db, oldVersion, newVersion) {
+        // Handle schema upgrades here
+        if (oldVersion < 1) {
+          db.execute(
+              "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $dataColumn BLOB)");
+        }
+      },
+    );
 
     return db;
   }
@@ -40,13 +47,9 @@ class DBHelper {
       batch.insert(
         tableName,
         {
-          section: newsResponse.section,
-          title: newsResponse.title,
-          url: newsResponse.url,
-          abstract: newsResponse.abstract,
-          byline: newsResponse.byline,
-          publishedDate: newsResponse.publishedDate,
+          dataColumn: newsResponse.writeToBuffer(), // Serialize protobuf to byte array
         },
+        conflictAlgorithm: ConflictAlgorithm.replace, // Handle conflicts
       );
     }
     await batch.commit(noResult: true);
@@ -57,8 +60,10 @@ class DBHelper {
 
     List<Map<String, dynamic>> data = await db!.query(tableName);
 
-    List<NewsResponse> historyList =
-    data.map((e) => NewsResponse.fromJson(e)).toList();
+    List<NewsResponse> historyList = data.map((element) {
+      final byteArray = element[dataColumn] as Uint8List; // Extract byte array
+      return NewsResponse.fromBuffer(byteArray); // Deserialize protobuf
+    }).toList();
 
     return historyList;
   }

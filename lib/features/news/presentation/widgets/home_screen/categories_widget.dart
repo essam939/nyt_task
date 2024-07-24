@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nyt/features/news/domain/entities/newa_request.dart';
+import 'package:nyt/core/protobuf/news_request/news.pb.dart';
 import 'package:nyt/features/news/presentation/controller/categories/categories_cubit.dart';
 import 'package:nyt/features/news/presentation/controller/news/news_cubit.dart';
 import 'package:nyt/features/news/presentation/widgets/home_screen/categories_data.dart';

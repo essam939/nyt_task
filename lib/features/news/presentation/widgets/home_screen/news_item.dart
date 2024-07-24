@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nyt/features/news/domain/entities/news_response.dart';
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart';
 import 'package:nyt/features/news/presentation/pages/news_details.dart';
 
 
-class ProductItem extends StatelessWidget {
+class NewsItem extends StatelessWidget {
 
-  const ProductItem({
+  const NewsItem({
     super.key,
     required this.newsDetails,
   });

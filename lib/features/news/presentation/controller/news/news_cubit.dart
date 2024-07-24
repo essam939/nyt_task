@@ -1,10 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nyt/core/protobuf/news_request/news.pb.dart';
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart';
 import 'package:nyt/core/service/remote/error_message_remote.dart';
 import 'package:nyt/core/utilities/db_helper.dart';
-import 'package:nyt/features/news/domain/entities/newa_request.dart';
-import 'package:nyt/features/news/domain/entities/news_response.dart';
+
 import 'package:nyt/features/news/domain/use_cases/get_news_usecase.dart';
 
 

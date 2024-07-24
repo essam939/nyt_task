@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nyt/features/news/domain/entities/news_response.dart';
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart';
 import 'package:nyt/features/news/presentation/widgets/news_details/cusom_button.dart';
 import 'package:nyt/features/news/presentation/widgets/news_details/custom_text.dart';
 
