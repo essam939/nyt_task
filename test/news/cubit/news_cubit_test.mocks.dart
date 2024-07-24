@@ -11,8 +11,8 @@ import 'package:connectivity_plus_platform_interface/connectivity_plus_platform_
 import 'package:dartz/dartz.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:nyt/core/error/failure.dart' as _i6;
-import 'package:nyt/features/news/domain/entities/newa_request.dart' as _i8;
-import 'package:nyt/features/news/domain/entities/news_response.dart' as _i7;
+import 'package:nyt/core/protobuf/news_request/news.pb.dart' as _i8;
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart' as _i7;
 import 'package:nyt/features/news/domain/repositories/base_news_repository.dart'
     as _i2;
 import 'package:nyt/features/news/domain/use_cases/get_news_usecase.dart'

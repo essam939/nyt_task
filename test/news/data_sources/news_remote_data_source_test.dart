@@ -3,11 +3,12 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:nyt/core/error/exceptions.dart';
+import 'package:nyt/core/protobuf/news_request/news.pb.dart';
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart';
 import 'package:nyt/core/service/remote/dio_consumer.dart';
 import 'package:nyt/core/service/remote/error_message_remote.dart';
 import 'package:nyt/features/news/data/data_sources/news_remote_data_source.dart';
-import 'package:nyt/features/news/domain/entities/newa_request.dart';
-import 'package:nyt/features/news/domain/entities/news_response.dart';
+
 import 'news_remote_data_source_test.mocks.dart';
 
 @GenerateMocks([DioConsumer])

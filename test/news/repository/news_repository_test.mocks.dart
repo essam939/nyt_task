@@ -8,10 +8,10 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:nyt/core/error/failure.dart' as _i5;
+import 'package:nyt/core/protobuf/news_request/news.pb.dart' as _i7;
+import 'package:nyt/core/protobuf/news_response/news_response.pb.dart' as _i6;
 import 'package:nyt/features/news/data/data_sources/news_remote_data_source.dart'
     as _i3;
-import 'package:nyt/features/news/domain/entities/newa_request.dart' as _i7;
-import 'package:nyt/features/news/domain/entities/news_response.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
