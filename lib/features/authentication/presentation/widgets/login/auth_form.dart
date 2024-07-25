@@ -1,7 +1,14 @@
-part of '../../pages/auth_screen.dart';
 
-class _AuthForm extends StatelessWidget {
-  const _AuthForm();
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nyt/core/service/remote/service_locator.dart';
+import 'package:nyt/core/widget_life_cycle_listener.dart';
+import 'package:nyt/features/authentication/presentation/controller/auth_cubit.dart';
+
+class AuthForm extends StatelessWidget {
+ final bool login;
+  const AuthForm({required this.login, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +95,10 @@ class _AuthForm extends StatelessWidget {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        await authController.register();
+                      login?await authController.login():  await authController.register();
                       },
                       child: Text(
-                        'Register',
+                       login ? 'Login' : 'Register',
                         style: TextStyle(fontSize: 20.sp),
                       )),
                 ),

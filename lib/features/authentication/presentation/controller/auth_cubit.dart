@@ -53,21 +53,26 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthLoading());
 
       try {
-        final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
+        if (await _handleBiometrics()) {
+          final UserCredential userCredential = await _auth
+              .signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text,
+          );
 
-        final user = userCredential.user;
-        if (user != null) {
-          if (user.emailVerified) {
-            _saveUserData(userCredential);
-            emit(AuthLoaded(userData: user));
+          final user = userCredential.user;
+          if (user != null) {
+            if (user.emailVerified) {
+              _saveUserData(userCredential);
+              emit(AuthLoaded(userData: user));
+            } else {
+              emit(AuthError(errorMessage: const ErrorMessageModel(
+                  msg: 'Email not verified')));
+            }
           } else {
-            emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'Email not verified')));
+            emit(AuthError(
+                errorMessage: const ErrorMessageModel(msg: 'User is null')));
           }
-        } else {
-          emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'User is null')));
         }
       } catch (e) {
         emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
@@ -133,6 +138,16 @@ class AuthCubit extends Cubit<AuthState> {
         name: user.displayName ?? "",
       );
       userData.writeJsonMap("userData", userModel.toJson());
+    }
+  }
+  // create logout function
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      userData.delete("userData");
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
     }
   }
 }

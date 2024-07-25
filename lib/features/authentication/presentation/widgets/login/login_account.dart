@@ -8,14 +8,16 @@ class _LoginAccount extends StatelessWidget {
       children: [
         10.verticalSpace,
         GestureDetector(
-          onTap: (){},
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> const LoginScreen()),);
+          },
           child: RichText(
               text: const TextSpan(
                   text: 'Already have an account? ',
                   style: TextStyle(color: Colors.grey),
                   children: [
                     TextSpan(
-                        text: 'log in',
+                        text: 'login',
                         style: TextStyle(color: Colors.black))
                   ])),
         ),

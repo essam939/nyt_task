@@ -1,0 +1,174 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:nyt/core/service/remote/service_locator.dart';
+import 'package:nyt/core/widget_life_cycle_listener.dart';
+import 'package:nyt/features/authentication/presentation/controller/auth_cubit.dart';
+import 'package:nyt/features/authentication/presentation/widgets/login/auth_background.dart';
+import 'package:nyt/features/authentication/presentation/widgets/login/auth_form.dart';
+import 'package:nyt/features/authentication/presentation/widgets/login/auth_header.dart';
+import 'package:nyt/features/news/presentation/pages/home_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+      if (state is AuthLoading) {
+        context.loaderOverlay.show();
+      } else if (state is AuthLoaded) {
+        context.loaderOverlay.hide();
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const HomeScreen()), (route) => false);
+      } else if (state is AuthError) {
+        context.loaderOverlay.hide();
+        var snackBar = SnackBar(
+          content: Text(state.errorMessage.msg),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }},
+      child:  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+      ),
+      backgroundColor: Colors.green,
+      body: const AuthBackground(
+        body: SingleChildScrollView(
+            child: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                AuthHeader(title: "Login Screen",),
+                AuthForm(login: true,),
+              ],
+            ),
+          ),
+        )),
+      ),
+    ),
+);
+  }
+}
+
+
+class _LoginForm extends StatelessWidget {
+  const _LoginForm();
+
+  @override
+  Widget build(BuildContext context) {
+    final authController = ServiceLocator.instance<AuthCubit>();
+    return WidgetLifecycleListener(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
+            key: authController.loginFormKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  style: const TextStyle(color: Colors.black),
+                  textInputAction: TextInputAction.next,
+                  controller: authController.emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9._%+-@]')),
+                  ],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter an email address';
+                    }
+                    final emailRegExp = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                    if (!emailRegExp.hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Email Address',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    labelStyle: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                20.verticalSpace,
+                Stack(children: [
+                  TextFormField(
+                    style: const TextStyle(color: Colors.black),
+                    obscureText: true,
+                    textInputAction: TextInputAction.done,
+                    controller: authController.passwordController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a password';
+                      }
+                      if (value.length < 8) {
+                        return 'Password must be at least 8 characters long';
+                      }
+                      final passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$');
+                      if (passwordRegExp.hasMatch(value)) {
+                        return 'Password must contain letters and numbers';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      labelStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ]),
+                10.verticalSpace,
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: 150.w,
+                        height: 50.h,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () async {
+                              await authController.login();
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(fontSize: 20.sp),
+                            )),
+                      ),
+                      GestureDetector(
+                        onTap: ()async{
+                          await authController.registerWithGoogle();
+                        },
+                        child: SizedBox(
+                          width: 50.w,
+                          height: 50.h,
+                          child: Image.network("https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"),
+                        ),
+                      )
+                    ]
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+}

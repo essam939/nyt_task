@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nyt/core/protobuf/news_request/news.pb.dart';
+import 'package:nyt/features/authentication/presentation/controller/auth_cubit.dart';
+import 'package:nyt/features/authentication/presentation/pages/login_screen.dart';
 import 'package:nyt/features/news/presentation/controller/categories/categories_cubit.dart';
 import 'package:nyt/features/news/presentation/controller/news/news_cubit.dart';
 import 'package:nyt/features/news/presentation/widgets/home_screen/categories_data.dart';
@@ -36,6 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('News'),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: (){
+            context.read<AuthCubit>().logout();
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const LoginScreen()), (route) => false);
+          }, icon: const Icon(Icons.logout)),
+        ],
       ),
       body: Column(
         children: [

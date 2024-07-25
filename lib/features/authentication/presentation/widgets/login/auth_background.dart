@@ -1,8 +1,10 @@
 
-part of '../../pages/auth_screen.dart';
 
-class _AuthBackground extends StatelessWidget {
-  const _AuthBackground({required this.body});
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class AuthBackground extends StatelessWidget {
+  const AuthBackground({required this.body});
   final Widget body;
 
   @override
