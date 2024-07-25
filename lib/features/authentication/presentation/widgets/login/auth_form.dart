@@ -7,8 +7,8 @@ import 'package:nyt/core/widget_life_cycle_listener.dart';
 import 'package:nyt/features/authentication/presentation/controller/auth_cubit.dart';
 
 class AuthForm extends StatelessWidget {
+  const AuthForm({required this.login, super.key});
  final bool login;
-  const AuthForm({required this.login, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

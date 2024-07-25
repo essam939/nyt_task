@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthBackground extends StatelessWidget {
-  const AuthBackground({required this.body});
+  const AuthBackground({super.key, required this.body});
   final Widget body;
 
   @override

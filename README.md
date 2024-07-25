@@ -22,10 +22,16 @@
  ┃ ┃ ┣ 📜exceptions.dart
  ┃ ┃ ┗ 📜failure.dart
  ┃ ┣ 📂protobuf
- ┃ ┃ ┣ 📜news.pb.dart
- ┃ ┃ ┣ 📜news.pbenum.dart
- ┃ ┃ ┣ 📜news.pbjson.dart
- ┃ ┃ ┗ 📜news.pbserver.dart
+ ┃ ┃ ┣ 📂news_request
+ ┃ ┃ ┃ ┣ 📜news.pb.dart
+ ┃ ┃ ┃ ┣ 📜news.pbenum.dart
+ ┃ ┃ ┃ ┣ 📜news.pbjson.dart
+ ┃ ┃ ┃ ┗ 📜news.pbserver.dart
+ ┃ ┃ ┗ 📂news_response
+ ┃ ┃ ┃ ┣ 📜news_response.pb.dart
+ ┃ ┃ ┃ ┣ 📜news_response.pbenum.dart
+ ┃ ┃ ┃ ┣ 📜news_response.pbjson.dart
+ ┃ ┃ ┃ ┗ 📜news_response.pbserver.dart
  ┃ ┣ 📂service
  ┃ ┃ ┣ 📂local
  ┃ ┃ ┃ ┣ 📂interface
@@ -66,13 +72,13 @@
  ┃ ┃ ┃ ┃ ┣ 📜auth_cubit.dart
  ┃ ┃ ┃ ┃ ┗ 📜auth_state.dart
  ┃ ┃ ┃ ┣ 📂pages
- ┃ ┃ ┃ ┃ ┗ 📜auth_screen.dart
+ ┃ ┃ ┃ ┃ ┣ 📜auth_screen.dart
+ ┃ ┃ ┃ ┃ ┗ 📜login_screen.dart
  ┃ ┃ ┃ ┗ 📂widgets
  ┃ ┃ ┃ ┃ ┗ 📂login
  ┃ ┃ ┃ ┃ ┃ ┣ 📜auth_background.dart
  ┃ ┃ ┃ ┃ ┃ ┣ 📜auth_form.dart
  ┃ ┃ ┃ ┃ ┃ ┣ 📜auth_header.dart
- ┃ ┃ ┃ ┃ ┃ ┣ 📜forget_password.dart
  ┃ ┃ ┃ ┃ ┃ ┗ 📜login_account.dart
  ┃ ┣ 📂news
  ┃ ┃ ┣ 📂data
@@ -106,15 +112,23 @@
  ┃ ┃ ┃ ┃ ┃ ┣ 📜categories_data.dart
  ┃ ┃ ┃ ┃ ┃ ┣ 📜categories_widget.dart
  ┃ ┃ ┃ ┃ ┃ ┣ 📜category_item.dart
- ┃ ┃ ┃ ┃ ┃ ┣ 📜news_list_widget.dart
- ┃ ┃ ┃ ┃ ┃ ┗ 📜product_item.dart
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜news_item.dart
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜news_list_widget.dart
  ┃ ┃ ┃ ┃ ┗ 📂news_details
  ┃ ┃ ┃ ┃ ┃ ┣ 📜cusom_button.dart
  ┃ ┃ ┃ ┃ ┃ ┗ 📜custom_text.dart
  ┃ ┗ 📜splash_screen.dart
  ┣ 📂proto
- ┃ ┗ 📜news.proto
+ ┃ ┣ 📜news.proto
+ ┃ ┗ 📜news_response.proto
  ┣ 📂scripts
+ ┃ ┣ 📜flutter_build_apk
+ ┃ ┣ 📜flutter_build_dev_apk
+ ┃ ┣ 📜flutter_build_ipa
+ ┃ ┣ 📜flutter_build_pro_apk
+ ┃ ┣ 📜flutter_build_pro_appbundle
+ ┃ ┣ 📜flutter_build_pro_ipa
+ ┃ ┣ 📜flutter_build_runner
  ┃ ┗ 📜protoc
  ┗ 📜main.dart
  ```
