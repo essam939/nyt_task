@@ -1,1 +1,2 @@
+#!/bin/bash
  protoc --dart_out=lib/core/protobuf -Ilib/proto lib/proto/news.proto

@@ -7,5 +7,5 @@ import 'package:nyt/features/authentication/domain/entities/register_response.da
 
 
 abstract class BaseAuthenticationRepository {
-  Future<Either<Failure, RegisterResponse>> login(RegisterRequest request);
+  Future<Either<Failure, RegisterResponse>> register(RegisterRequest request);
 }

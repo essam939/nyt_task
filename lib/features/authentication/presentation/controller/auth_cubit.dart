@@ -12,70 +12,64 @@ import 'package:firebase_auth/firebase_auth.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-
   AuthCubit() : super(AuthInitial());
-  final ISimpleUserData userData =
-      UserDataFactory.createUserData(LocalDataType.secured);
+
+  final ISimpleUserData userData = UserDataFactory.createUserData(LocalDataType.secured);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final LocalAuthentication _localAuth = LocalAuthentication();
-  final emailController =
-      TextEditingController(text: "mohamed.essam9393@gmail.com");
+  final emailController = TextEditingController(text: "mohamed.essam9393@gmail.com");
   final passwordController = TextEditingController(text: "Moh@med.com5");
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> register() async {
-    if (loginFormKey.currentState!.validate()) {
+    if (loginFormKey.currentState?.validate() ?? false) {
       emit(AuthLoading());
+
       try {
-        // Check if fingerprint authentication is available
-        bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
-        if (canCheckBiometrics) {
-          bool authenticated = await _localAuth.authenticate(
-            localizedReason: 'Please authenticate to proceed',
+        if (await _handleBiometrics()) {
+          final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text,
           );
 
-          if (!authenticated) {
-            emit(AuthError(
-                errorMessage: const ErrorMessageModel(
-                    msg: 'Fingerprint authentication failed')));
-            return;
+          final user = userCredential.user;
+          if (user != null) {
+            await user.sendEmailVerification();
+            _saveUserData(userCredential);
+            emit(AuthLoaded(userData: user));
+          } else {
+            emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'User is null')));
           }
-        } else {
-          emit(AuthError(
-              errorMessage: const ErrorMessageModel(
-                  msg: 'Biometric authentication is not available')));
-          return;
         }
+      } catch (e) {
+        emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
+      }
+    }
+  }
 
-        // Proceed with Firebase authentication
-        final UserCredential userCredential =
-            await _auth.createUserWithEmailAndPassword(
+  Future<void> login() async {
+    if (loginFormKey.currentState?.validate() ?? false) {
+      emit(AuthLoading());
+
+      try {
+        final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
 
-        // Successfully logged in, update UI or save user data
         final user = userCredential.user;
         if (user != null) {
-          // Save user data
-          UserModel userModel = UserModel(
-            token: userCredential.user!.uid,
-            email: userCredential.user!.email??"",
-            name: userCredential.user!.displayName??"",
-          );
-
-          userData.writeJsonMap(
-            "userData",
-            userModel.toJson(),
-          );
-          emit(AuthLoaded(userData: user));
+          if (user.emailVerified) {
+            _saveUserData(userCredential);
+            emit(AuthLoaded(userData: user));
+          } else {
+            emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'Email not verified')));
+          }
         } else {
-          emit(AuthError(
-              errorMessage: const ErrorMessageModel(msg: 'User is null')));
+          emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'User is null')));
         }
       } catch (e) {
-        // Auth failed, handle the error
         emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
       }
     }
@@ -83,81 +77,69 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> registerWithGoogle() async {
     try {
-      // Sign out any existing Google user
-      _googleSignIn.signOut();
+      await _googleSignIn.signOut();
 
-      // Start Google Sign-In process
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-      // If user cancels sign-in, show error message and return
       if (googleUser == null) {
-        emit(AuthError(
-            errorMessage: const ErrorMessageModel(msg: 'Google Sign-In canceled')));
+        emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'Google Sign-In canceled')));
         return;
       }
 
-      // Obtain authentication tokens
-      final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
-
-      // Create Firebase credential using Google authentication tokens
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Sign in with Google credential using Firebase
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
 
-      // Check if the user is signing in for the first time
-      final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
-
-      if (isNewUser) {
-        // If user is new, save user data and perform registration
-        final user = userCredential.user;
-        if (user != null) {
-          UserModel userModel = UserModel(
-            token: userCredential.user!.uid,
-            email: userCredential.user!.email!,
-            name: userCredential.user!.displayName!,
-          );
-          userData.writeJsonMap(
-            "userData",
-            userModel.toJson(),
-          );
-          emit(AuthLoaded(userData: user));
-        } else {
-          emit(AuthError(
-              errorMessage: const ErrorMessageModel(msg: 'User is null')));
-        }
+      final user = userCredential.user;
+      if (user != null) {
+        _saveUserData(userCredential);
+        emit(AuthLoaded(userData: user));
       } else {
-        // If user already exists, proceed with sign-in
-        final user = userCredential.user;
-        if (user != null) {
-          UserModel userModel = UserModel(
-            token: userCredential.user!.uid,
-            email: userCredential.user!.email!,
-            name: userCredential.user!.displayName!,
-          );
-          userData.writeJsonMap(
-            "userData",
-            userModel.toJson(),
-          );
-          emit(AuthLoaded(userData: user));
-        } else {
-          emit(AuthError(
-              errorMessage: const ErrorMessageModel(msg: 'User is null')));
-        }
+        emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'User is null')));
       }
     } catch (e) {
-      // Handle the error
       emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
+    }
+  }
+
+  Future<bool> _handleBiometrics() async {
+    try {
+      if (await _localAuth.canCheckBiometrics) {
+        final authenticated = await _localAuth.authenticate(localizedReason: 'Please authenticate to proceed');
+        if (!authenticated) {
+          emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'Fingerprint authentication failed')));
+          return false;
+        }
+        return true;
+      } else {
+        emit(AuthError(errorMessage: const ErrorMessageModel(msg: 'Biometric authentication is not available')));
+        return false;
+      }
+    } catch (e) {
+      emit(AuthError(errorMessage: ErrorMessageModel(msg: e.toString())));
+      return false;
+    }
+  }
+
+  void _saveUserData(UserCredential userCredential) {
+    final user = userCredential.user;
+    if (user != null) {
+      final userModel = UserModel(
+        token: user.uid,
+        email: user.email ?? "",
+        name: user.displayName ?? "",
+      );
+      userData.writeJsonMap("userData", userModel.toJson());
     }
   }
 }
 
 class UserModel {
   UserModel({required this.email, required this.name, required this.token});
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       email: json['email'] as String,
@@ -165,9 +147,11 @@ class UserModel {
       token: json['token'] as String,
     );
   }
+
   final String email;
   final String name;
   final String token;
+
   Map<String, dynamic> toJson() {
     return {
       'email': email,
