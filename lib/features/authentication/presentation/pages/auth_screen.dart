@@ -9,11 +9,11 @@ import 'package:nyt/features/authentication/presentation/controller/auth_cubit.d
 import 'package:nyt/features/news/presentation/pages/home_screen.dart';
 
 
-part '../widgets/login/auth_header.dart';
-part '../widgets/login/auth_form.dart';
-part '../widgets/login/auth_background.dart';
-part '../widgets/login/forget_password.dart';
-part '../widgets/login/login_account.dart';
+part '../widgets/register/auth_header.dart';
+part '../widgets/register/auth_form.dart';
+part '../widgets/register/auth_background.dart';
+part '../widgets/register/forget_password.dart';
+part '../widgets/register/login_account.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});

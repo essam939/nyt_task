@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:nyt/core/protobuf/news_response/news_response.pb.dart';
 import 'package:sqflite/sqflite.dart';

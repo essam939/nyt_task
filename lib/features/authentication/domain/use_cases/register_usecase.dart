@@ -16,6 +16,6 @@ class RegisterUseCase extends BaseUseCase<RegisterResponse, RegisterRequest> {
 
   @override
   Future<Either<Failure, RegisterResponse>> execute(RegisterRequest params) async {
-    return await authenticationRepository.login(params);
+    return await authenticationRepository.register(params);
   }
 }

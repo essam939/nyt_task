@@ -13,7 +13,7 @@ class AuthenticationRepository extends BaseAuthenticationRepository {
   final BaseAuthenticationDataSource authenticationDataSource;
 
   @override
-  Future<Either<Failure, RegisterResponse>> login(RegisterRequest request) async {
+  Future<Either<Failure, RegisterResponse>> register(RegisterRequest request) async {
     return await authenticationDataSource.register(request);
   }
 }

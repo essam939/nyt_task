@@ -25,7 +25,8 @@ class _AuthForm extends StatelessWidget {
                 if (value!.isEmpty) {
                   return 'Please enter an email address';
                 }
-                final emailRegExp = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                final emailRegExp =
+                    RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
                 if (!emailRegExp.hasMatch(value)) {
                   return 'Please enter a valid email address';
                 }
@@ -56,7 +57,8 @@ class _AuthForm extends StatelessWidget {
                   if (value.length < 8) {
                     return 'Password must be at least 8 characters long';
                   }
-                  final passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$');
+                  final passwordRegExp =
+                      RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$');
                   if (passwordRegExp.hasMatch(value)) {
                     return 'Password must contain letters and numbers';
                   }
@@ -76,38 +78,35 @@ class _AuthForm extends StatelessWidget {
               ),
             ]),
             10.verticalSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: 150.w,
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              SizedBox(
+                width: 150.w,
+                height: 50.h,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      await authController.register();
+                    },
+                    child: Text(
+                      'Register',
+                      style: TextStyle(fontSize: 20.sp),
+                    )),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  await authController.registerWithGoogle();
+                },
+                child: SizedBox(
+                  width: 50.w,
                   height: 50.h,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () async {
-                        await authController.register();
-                      },
-                      child: Text(
-                        'Register',
-                        style: TextStyle(fontSize: 20.sp),
-                      )),
+                  child: Image.network(
+                      "https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"),
                 ),
-                GestureDetector(
-                  onTap: ()async{
-                    await authController.registerWithGoogle();
-                  },
-                  child: SizedBox(
-                    width: 50.w,
-                    height: 50.h,
-                    child: Image.network("https://seeklogo.com/images/G/google-logo-28FA7991AF-seeklogo.com.png"),
-                  ),
-                )
-              ]
-            ),
-
+              )
+            ]),
           ],
         ),
       ),
